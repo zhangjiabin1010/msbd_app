@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:msbd_app/pages/learn/widget/learn/gridview.dart';
 
 class LearnPage extends StatefulWidget {
   const LearnPage({Key? key}) : super(key: key);
@@ -18,20 +19,7 @@ class _LearnPageState extends State<LearnPage> {
       decoration:
           BoxDecoration(border: Border.all(color: Colors.red, width: 5.0)),
       child: Column(
-        children: [
-          Row(
-            children: [
-              Icon(
-                Icons.local_library,
-                size: 100,
-              ),
-              Icon(
-                Icons.question_answer,
-                size: 100,
-              ),
-            ],
-          )
-        ],
+        children: [SelectGridView()],
       ),
     );
   }

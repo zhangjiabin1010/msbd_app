@@ -16,7 +16,7 @@ class SelectGridView extends StatelessWidget {
       Container(
           decoration: BoxDecoration(
               border: Border.all(color: Colors.green, width: 5.0)),
-          height: 400,
+          height: 500,
           child: GridView(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 //横轴元素个数
@@ -32,23 +32,26 @@ class SelectGridView extends StatelessWidget {
             }),
           )),
       Container(
+          decoration: BoxDecoration(
+              border: Border.all(color: Colors.purple, width: 5.0)),
+          height: 200,
           child: InkWell(
-        onTap: () {},
-        child: Card(
-            elevation: 5.0, //设置阴影
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(20.0))),
-            child: Container(
-              margin: EdgeInsets.only(top: 30),
-              width: double.infinity,
-              height: 100,
-              child: Text(
-                "开始学习",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 50, fontWeight: FontWeight.w500),
-              ),
-            )),
-      ))
+            onTap: () {},
+            child: Card(
+                elevation: 5.0, //设置阴影
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                child: Container(
+                  margin: EdgeInsets.only(top: 30),
+                  width: double.infinity,
+                  height: 100,
+                  child: Text(
+                    "开始学习",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 50, fontWeight: FontWeight.w500),
+                  ),
+                )),
+          ))
     ]);
   }
 }

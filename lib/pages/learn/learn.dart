@@ -12,9 +12,8 @@ class _LearnPageState extends State<LearnPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 200),
-      padding: EdgeInsets.all(50),
-      height: 800,
+      margin: EdgeInsets.only(top: 80),
+      height: 1000,
       alignment: Alignment.center,
       decoration:
           BoxDecoration(border: Border.all(color: Colors.red, width: 5.0)),

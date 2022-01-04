@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:msbd_app/pages/learn/focus.dart';
 
 class SelectGridView extends StatelessWidget {
   const SelectGridView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    const List<String> titleList = ["热榜", "收藏", "题库", "已完成"];
+    const List<String> titleList = ["热榜", "收藏", "关注", "已完成"];
     const List<String> imageList = [
       "assets/images/1.png",
       "assets/images/2.png",
@@ -28,7 +29,7 @@ class SelectGridView extends StatelessWidget {
                 //子组件宽高长度比例
                 childAspectRatio: 1.4),
             children: List<Widget>.generate(titleList.length, (index) {
-              return GetGridView(titleList[index], imageList[index]);
+              return GetGridView(context, titleList[index], imageList[index]);
             }),
           )),
       Container(
@@ -56,9 +57,23 @@ class SelectGridView extends StatelessWidget {
   }
 }
 
-Widget GetGridView(title, image) {
+Widget GridRoute(title) {
+  print('xxxxxxxxxxxxxxxxxxxxxxxx');
+  print(title);
+  if (title == '关注') {
+    return FocusItemList();
+  } else {
+    print('xssssssssssssssssss');
+    return FocusItemList();
+  }
+}
+
+Widget GetGridView(context, title, image) {
   return InkWell(
-    onTap: () {},
+    onTap: () {
+      Navigator.of(context).push(new MaterialPageRoute(
+          builder: (BuildContext context) => GridRoute(title)));
+    },
     child: Card(
       elevation: 5.0, //设置阴影
       shape: const RoundedRectangleBorder(

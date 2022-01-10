@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'collected.dart';
 import 'finished.dart';
 import 'focus.dart';
+import 'hotlist.dart';
+import 'widget/answer_detail.dart';
 
 class LearnPage extends StatefulWidget {
   const LearnPage({Key? key}) : super(key: key);
@@ -31,7 +34,7 @@ class SelectGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const List<String> titleList = ["热榜", "收藏", "关注", "已完成"];
+    const List<String> titleList = ["热榜", "收藏", "关注", "完成"];
     const List<String> imageList = [
       "assets/images/1.png",
       "assets/images/2.png",
@@ -62,7 +65,10 @@ class SelectGridView extends StatelessWidget {
               border: Border.all(color: Colors.purple, width: 5.0)),
           height: 200,
           child: InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).push(new MaterialPageRoute(
+                  builder: (BuildContext context) => AnswerShow()));
+            },
             child: Card(
                 elevation: 5.0, //设置阴影
                 shape: const RoundedRectangleBorder(
@@ -87,12 +93,15 @@ Widget GridRoute(title) {
   print(title);
   if (title == '关注') {
     return FocusItemList();
-  } else if (title == '已完成') {
+  } else if (title == '完成') {
     print('xssssssssssssssssss');
     return FinishedList();
+  } else if (title == '收藏') {
+    return CollectedList();
+  } else if (title == '热榜') {
+    return HotList();
   } else {
-    print('xssssssssssssssssss');
-    return FinishedList();
+    return HotList();
   }
 }
 

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 import 'widget/question_list.dart';
 
-class FinishedList extends StatefulWidget {
-  const FinishedList({Key? key}) : super(key: key);
+class CollectedList extends StatefulWidget {
+  const CollectedList({Key? key}) : super(key: key);
 
   @override
-  _FinishedListState createState() => _FinishedListState();
+  _CollectedListState createState() => _CollectedListState();
 }
 
-class _FinishedListState extends State<FinishedList> {
+class _CollectedListState extends State<CollectedList> {
   @override
   Widget build(BuildContext context) {
     const question_list = [
@@ -18,7 +18,7 @@ class _FinishedListState extends State<FinishedList> {
       {"id": "3", "title": "常见Web框架"},
     ];
     return Scaffold(
-      appBar: AppBar(title: Text("完成"), centerTitle: true, actions: <Widget>[
+      appBar: AppBar(title: Text("收藏"), centerTitle: true, actions: <Widget>[
         IconButton(
             icon: Icon(Icons.search),
             onPressed: () {

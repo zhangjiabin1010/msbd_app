@@ -26,26 +26,34 @@ class AnswerShow extends StatelessWidget {
                   ),
                   IconButton(icon: Icon(Icons.star), onPressed: () {})
                 ])),
-            Container(
-              decoration:
-                  BoxDecoration(border: Border.all(color: Colors.black)),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
+            Expanded(
+              child: Container(
+                decoration:
+                    BoxDecoration(border: Border.all(color: Colors.black)),
                 child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Text(
-                        'Your text.....Your text.Your text.Your text.Your text...')),
+                  scrollDirection: Axis.vertical,
+                  child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Text.rich(TextSpan(
+                        text:
+                            'Your text...asdas..Your teasdasdxt.Your textasdasd.Your textsadsadsadsad.Your text...',
+                        style: TextStyle(fontSize: 30),
+                      ))),
+                ),
               ),
-            ),
+            )
           ],
         ),
         bottomSheet: Container(
             height: 90,
             decoration: BoxDecoration(border: Border.all(color: Colors.red)),
-            child: Row(children: [
-              ButtonIconText(Icons.account_balance_sharp, "666"),
-              ButtonIconText(Icons.ac_unit_outlined, "777"),
-              ButtonIconText(Icons.alarm_on, "888"),
-            ])));
+            child: Row(
+                textDirection: TextDirection.rtl,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ButtonIconText(Icons.account_balance_sharp, "666"),
+                  ButtonIconText(Icons.ac_unit_outlined, "777"),
+                  ButtonIconText(Icons.alarm_on, "888"),
+                ])));
   }
 }

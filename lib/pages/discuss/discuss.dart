@@ -15,8 +15,7 @@ class _DiscussPageState extends State<DiscussPage> {
         body: Container(
           decoration: BoxDecoration(border: Border.all(color: Colors.red)),
           child: Center(
-            child: Text(
-              """讨论ssssss讨论sssssss讨论sssssss讨论sssssss讨论
+            child: Text("""讨论ssssss讨论sssssss讨论sssssss讨论sssssss讨论
               sssssss讨论ssssss讨论ssssss讨论sssssss讨
               论sssssss讨论sssssss讨论ssssss
               s讨论sssssss讨论sssssss讨论
@@ -29,9 +28,9 @@ class _DiscussPageState extends State<DiscussPage> {
               s讨论sssssss讨论sssssss讨论
               s讨论sssssss讨论sssssss讨论
               s讨论sssssss讨论sssssss讨论
-              s讨论sssssss讨论sssssss讨论ssss""",
-              style: TextStyle(fontSize: 30),
-            ),
+              s讨论sssssss讨论sssssss讨论sssss讨论sssssss讨论sssssss讨论
+              s讨论sssssss讨论sssssss讨论
+              s讨论sssssss讨论sssssss讨论99999""", style: TextStyle(fontSize: 30)),
           ),
         ));
   }

@@ -14,7 +14,7 @@ class _DiscussPageState extends State<DiscussPage> {
         appBar: AppBar(title: Text("ssss")),
         body: Container(
           decoration: BoxDecoration(border: Border.all(color: Colors.red)),
-          child: Center(
+          child: SingleChildScrollView(
             child: Text("""讨论ssssss讨论sssssss讨论sssssss讨论sssssss讨论
               sssssss讨论ssssss讨论ssssss讨论sssssss讨
               论sssssss讨论sssssss讨论ssssss

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:msbd_app/services/http.dart';
 
 import 'widget/question_list.dart';
 
@@ -10,13 +11,39 @@ class FinishedList extends StatefulWidget {
 }
 
 class _FinishedListState extends State<FinishedList> {
+  List data = [];
+
+  void getHttp() async {
+    try {
+      Http.get('ms_question_show', params: {}, needCode: false).then((res) => {
+            setState(() {
+              data = res;
+            })
+          });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
+  void initState() {
+    getHttp();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    const question_list = [
-      {"id": "1", "title": "Python的浅拷贝与深拷贝区别"},
-      {"id": "2", "title": "对GIL的理解"},
-      {"id": "3", "title": "常见Web框架"},
-    ];
+    final question_list = data;
+    print('oooooooooooooooooo');
+    print(question_list);
+    print(question_list.length);
+    print('oooooooooooooooooo');
+
+    // const question_list = [
+    //   {"id": "1", "title": "Python的浅拷贝与深拷贝区别"},
+    //   {"id": "2", "title": "对GIL的理解"},
+    //   {"id": "3", "title": "常见Web框架"},
+    // ];
     return Scaffold(
       appBar: AppBar(title: Text("完成"), centerTitle: true, actions: <Widget>[
         IconButton(

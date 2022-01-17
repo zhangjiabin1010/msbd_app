@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:msbd_app/models/ms_question_entity.dart';
+import 'package:msbd_app/services/http.dart';
 
 class DiscussPage extends StatefulWidget {
   const DiscussPage({Key? key}) : super(key: key);
@@ -12,36 +13,38 @@ class DiscussPage extends StatefulWidget {
 }
 
 class _DiscussPageState extends State<DiscussPage> {
+  var data;
+
   void getHttp() async {
     try {
-      var response = await Dio().get(
-          'https://www.fastmock.site/mock/8279d14ec2f5e5fb1f521b7fd2f77edc/msdb/msdb_app');
-
-      var data = json.decode(response.toString());
-      MsQuestionEntity ms_question_entity = MsQuestionEntity.fromJson(data);
-      print(ms_question_entity.data[0].question);
-      // Map<String, dynamic> data = json.decode(response_result);
-      // print(data);
-      // MsQuestionEntity ms_question_entity = MsQuestionEntity.fromJson(n);
-      // List<dynamic> dataa = ms_question_entity.data;
-
-      // print(dataa[0]);
-
-      // MsQuestionEntity ms_question_entity = MsQuestionEntity.fromJson(data);
+      Http.get('ms_question_show', params: {}, needCode: false).then((res) => {
+            print('发送请求：$res'),
+            setState(() {
+              data = res;
+            })
+          });
     } catch (e) {
       print(e);
     }
   }
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     getHttp();
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print(data[0]["question"]);
+    var a = data[0]["question"];
     return Scaffold(
         appBar: AppBar(title: Text("ssss")),
         body: Container(
           decoration: BoxDecoration(border: Border.all(color: Colors.red)),
           child: SingleChildScrollView(
-            child: Text("""讨99""", style: TextStyle(fontSize: 30)),
+            child: Text("${a}", style: TextStyle(fontSize: 30)),
           ),
         ));
   }

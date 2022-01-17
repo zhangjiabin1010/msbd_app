@@ -6,7 +6,7 @@ Widget QuestionListItem(question_dict) {
       //发起网络请求，传值question_dict['id']
     },
     child: ListTile(
-        title: Text(question_dict['title']),
+        title: Text(question_dict['question']),
         trailing:
             IconButton(icon: Icon(Icons.navigate_next), onPressed: () {})),
   );

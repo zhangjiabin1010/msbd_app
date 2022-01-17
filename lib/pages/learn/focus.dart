@@ -7,6 +7,7 @@ class FocusItemList extends StatelessWidget {
   Widget build(BuildContext context) {
     const List<String> languagelist = ["Python", "Java", "Go"];
     const List<String> taglist = ["Vue", "React", "Springboot"];
+
     return Scaffold(
       appBar: AppBar(title: Text("选择学习技能"), centerTitle: true),
       body: Column(children: [

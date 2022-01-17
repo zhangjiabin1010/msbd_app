@@ -89,12 +89,9 @@ class SelectGridView extends StatelessWidget {
 }
 
 Widget GridRoute(title) {
-  print('xxxxxxxxxxxxxxxxxxxxxxxx');
-  print(title);
   if (title == '关注') {
     return FocusItemList();
   } else if (title == '完成') {
-    print('xssssssssssssssssss');
     return FinishedList();
   } else if (title == '收藏') {
     return CollectedList();

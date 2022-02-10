@@ -26,7 +26,7 @@ class _AnswerShowState extends State<AnswerShow> {
               print('1111111111111111111');
               print(res);
               print('1111111111111111111');
-              MsQuestionEntity answer = MsQuestionEntity.fromJson(res);
+              Data answer = Data.fromJson(res);
               print('22222222222222222');
               print(answer);
               print('22222222222222222');

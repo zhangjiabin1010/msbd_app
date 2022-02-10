@@ -4,7 +4,7 @@ import 'collected.dart';
 import 'finished.dart';
 import 'focus.dart';
 import 'hotlist.dart';
-import 'widget/answer_detail.dart';
+import 'answer_detail_show.dart';
 
 class LearnPage extends StatefulWidget {
   const LearnPage({Key? key}) : super(key: key);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:msbd_app/services/http.dart';
 
-import 'widget/question_list.dart';
+import 'question_list_show.dart';
 
 class FinishedList extends StatefulWidget {
   const FinishedList({Key? key}) : super(key: key);
@@ -34,16 +34,7 @@ class _FinishedListState extends State<FinishedList> {
   @override
   Widget build(BuildContext context) {
     final question_list = data;
-    print('oooooooooooooooooo');
-    print(question_list);
-    print(question_list.length);
-    print('oooooooooooooooooo');
 
-    // const question_list = [
-    //   {"id": "1", "title": "Python的浅拷贝与深拷贝区别"},
-    //   {"id": "2", "title": "对GIL的理解"},
-    //   {"id": "3", "title": "常见Web框架"},
-    // ];
     return Scaffold(
       appBar: AppBar(title: Text("完成"), centerTitle: true, actions: <Widget>[
         IconButton(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'widget/question_list.dart';
+import 'question_list_show.dart';
 
 class HotList extends StatefulWidget {
   const HotList({Key? key}) : super(key: key);

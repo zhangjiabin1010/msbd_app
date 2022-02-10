@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:msbd_app/models/ms_question_entity.dart';
 import 'package:msbd_app/pages/widgets/button_icon_text.dart';
 import 'package:msbd_app/pages/widgets/image_text_mix_generate.dart';
+import 'package:msbd_app/services/http.dart';
 
 class AnswerShow extends StatefulWidget {
   const AnswerShow({Key? key}) : super(key: key);
@@ -15,18 +17,31 @@ class _AnswerShowState extends State<AnswerShow> {
     "title": "Python如何实现单例模式",
     "content": "啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊|assets/images/1.png|嘿嘿嘿嘿嘿嘿嘿嘿嘿嘿嘿嘿嘿嘿嘿"
   };
+  // var Answer = {};
+
+  void getHttp() async {
+    try {
+      Http.get('ms_answer_show', params: {}, needCode: false).then((res) => {
+            setState(() {
+              print('1111111111111111111');
+              print(res);
+              print('1111111111111111111');
+              MsQuestionEntity answer = MsQuestionEntity.fromJson(res);
+              print('22222222222222222');
+              print(answer);
+              print('22222222222222222');
+              // Answer = res;
+            })
+          });
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
-  initStete() {
+  initState() {
+    getHttp();
     super.initState();
-    // var Answer = {
-    //   "id": "1",
-    //   "title": "Python如何实现单例模式",
-    //   "content": "啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊|assets/images/1.png|嘿嘿嘿嘿嘿嘿嘿嘿嘿嘿嘿嘿嘿嘿嘿"
-    // };
-    // var question_id = Answer['id'];
-    // var title = Answer['title'];
-    // List<String> AnswerItemList = Answer['content']!.split("|");
   }
 
   void refresh_answer() {
@@ -41,6 +56,11 @@ class _AnswerShowState extends State<AnswerShow> {
 
   @override
   Widget build(BuildContext context) {
+    print('xxxxxxxxxxxxxxxxxxxxxxxxx');
+    print('xxxxxxxxxxxxxxxxxxxxxxxxx');
+    print(Answer);
+    print('xxxxxxxxxxxxxxxxxxxxxxxxx');
+    print('xxxxxxxxxxxxxxxxxxxxxxxxx');
     var question_id = Answer['id'];
     var title = Answer['title'];
     List<String> AnswerItemList = Answer['content']!.split("|");
@@ -48,6 +68,7 @@ class _AnswerShowState extends State<AnswerShow> {
         appBar: AppBar(
           title: Text("888888"),
         ),
+        drawer: DrawerQuestionList(),
         body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Container(
               width: double.infinity,
@@ -97,5 +118,20 @@ class _AnswerShowState extends State<AnswerShow> {
                       custom_text: "下一题",
                       refresh_answer: refresh_answer),
                 ])));
+  }
+}
+
+class DrawerQuestionList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+        child: ListView.builder(
+            itemCount: 10,
+            itemBuilder: (BuildContext context, int index) {
+              return new Container(
+                padding: const EdgeInsets.all(8.0),
+                child: new Text('今天吃什么？ $index'),
+              );
+            }));
   }
 }

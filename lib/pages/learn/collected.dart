@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'widget/question_list.dart';
+import 'question_list_show.dart';
 
 class CollectedList extends StatefulWidget {
   const CollectedList({Key? key}) : super(key: key);

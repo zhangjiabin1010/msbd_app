@@ -28,7 +28,7 @@ class MsQuestionEntity extends Object {
 @JsonSerializable()
 class Data extends Object {
   @JsonKey(name: 'id')
-  String id;
+  int id;
 
   @JsonKey(name: 'category')
   String category;

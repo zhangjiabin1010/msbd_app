@@ -3,7 +3,7 @@
 part of 'ms_question_entity.dart';
 
 // **************************************************************************
-// JsonSerializableGenerator
+// JsonSerializableGeneratorasdasdsa
 // **************************************************************************
 
 MsQuestionEntity _$MsQuestionEntityFromJson(Map<String, dynamic> json) =>
@@ -23,7 +23,7 @@ Map<String, dynamic> _$MsQuestionEntityToJson(MsQuestionEntity instance) =>
     };
 
 Data _$DataFromJson(Map<String, dynamic> json) => Data(
-      json['id'] as String,
+      json['id'] as int,
       json['category'] as String,
       json['question'] as String,
       json['answer'] as String,

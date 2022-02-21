@@ -1,10 +1,14 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:msbd_app/models/ms_question_entity.dart';
 import 'package:msbd_app/pages/widgets/button_icon_text.dart';
-import 'package:msbd_app/pages/widgets/image_text_mix_generate.dart';
 import 'package:msbd_app/services/http.dart';
+import 'package:flutter_html/flutter_html.dart';
+
+
+
 
 class AnswerShow extends StatefulWidget {
   const AnswerShow({Key? key}) : super(key: key);
@@ -14,27 +18,28 @@ class AnswerShow extends StatefulWidget {
 }
 
 class _AnswerShowState extends State<AnswerShow> {
-  // late var Answer;
-//or by making it nullable.
-  Data? Answer;
-  // var Answer = {};
 
-  void getHttp() async {
-    try {
-      Http.get('ms_answer_show', params: {}, needCode: false).then((res) => {
-            setState(() {
-              Answer = Data.fromJson(res);
-            })
+  Data? Answer;
+  var _futureBuilderFuture;
+
+
+  Future getAnswer() async {
+
+    var response = Http.get('ms_answer_show', params: {}, needCode: false).then((res) => {
+              // Answer = Data.fromJson(res)
           });
-    } catch (e) {
-      print(e);
-    }
+    print('xxxxxxxxxxxxxxxxxxxxxxxxxx000');
+    print(response);
+    print('xxxxxxxxxxxxxxxxxxxxxxxxxx000');
+
+    return response;
   }
 
   @override
   initState() {
-    getHttp();
     super.initState();
+    _futureBuilderFuture = getAnswer();
+
   }
 
   void refresh_answer() {
@@ -45,45 +50,73 @@ class _AnswerShowState extends State<AnswerShow> {
   @override
   Widget build(BuildContext context) {
     var question_id = Answer?.id;
+    print('xxxxxxxxxxxxxxxxxx');
+    print(question_id);
+    print('xxxxxxxxxxxxxxxxxx');
     var title = Answer?.question;
-    var answer = Answer?.answer;
-    print(answer);
-    if (answer != null) {
-      List<String> AnswerItemList = answer.split("|");
-      }
-    print(AnswerItemList);
+    var answer = Answer?.answer == null? "":Answer?.answer;
     return Scaffold(
         appBar: AppBar(
           title: Text("888888"),
         ),
         drawer: DrawerQuestionList(),
-        body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Container(
-              width: double.infinity,
-              padding: EdgeInsets.only(left: 10),
-              decoration: BoxDecoration(border: Border.all(color: Colors.red)),
-              child: Row(children: [
-                Text(
-                  "${title}",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(fontSize: 20, color: Colors.red),
-                ),
-                IconButton(icon: Icon(Icons.star), onPressed: () {})
-              ])),
-          // Expanded(
-          //   child: Container(
-          //     decoration:
-          //         BoxDecoration(border: Border.all(color: Colors.black)),
-          //     child: SingleChildScrollView(
-          //       child: Text.rich(TextSpan(
-          //           children: List<InlineSpan>.generate(AnswerItemList.length,
-          //               (index) {
-          //         return ImageTextMixGenerate(context, AnswerItemList[index]);
-          //       }))),
+        body:
+            FutureBuilder(
+              future: _futureBuilderFuture,
+              builder: (BuildContext context, AsyncSnapshot snapshot){
+                switch (snapshot.connectionState) {
+                  case ConnectionState.none:
+                    print('还没有开始网络请求');
+                    return Text('还没有开始网络请求');
+                  case ConnectionState.active:
+                    print('active');
+                    return Text('ConnectionState.active');
+                  case ConnectionState.waiting:
+                    print('waiting');
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  case ConnectionState.done:
+                    print('done');
+                    if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    }
+                    // return _createListView(context, snapshot);
+                    return AnswerDetail(context, snapshot);
+                  default:
+                    return Text('还没有开始网络请求');
+                }
+              }
+            ),
+          // Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          //   Container(
+          //       width: double.infinity,
+          //       padding: EdgeInsets.only(left: 10),
+          //       decoration: BoxDecoration(border: Border.all(color: Colors.red)),
+          //       child: Row(children: [
+          //         Text(
+          //           "${title}",
+          //           textAlign: TextAlign.left,
+          //           style: TextStyle(fontSize: 20, color: Colors.red),
+          //         ),
+          //         IconButton(icon: Icon(Icons.star), onPressed: () {})
+          //       ])),
+          //   Expanded(
+          //     child: Container(
+          //       decoration:
+          //           BoxDecoration(border: Border.all(color: Colors.black)),
+          //       child: SingleChildScrollView(
+          //         child: Html(
+          //           data:answer,
+          //           style: {
+          //             "p": Style(
+          //               color: Colors.green,
+          //             )},
+          //         ),
+          //       ),
           //     ),
-          //   ),
-          // )
-        ]),
+          //   )
+          // ]),
         bottomSheet: Container(
             height: 90,
             decoration: BoxDecoration(border: Border.all(color: Colors.red)),
@@ -122,4 +155,37 @@ class DrawerQuestionList extends StatelessWidget {
               );
             }));
   }
+}
+
+
+Widget AnswerDetail(BuildContext context, AsyncSnapshot snapshot){
+  return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+    Container(
+        width: double.infinity,
+        padding: EdgeInsets.only(left: 10),
+        decoration: BoxDecoration(border: Border.all(color: Colors.red)),
+        child: Row(children: [
+          Text(
+            "${ snapshot.data['code']}",
+            textAlign: TextAlign.left,
+            style: TextStyle(fontSize: 20, color: Colors.red),
+          ),
+          IconButton(icon: Icon(Icons.star), onPressed: () {})
+        ])),
+    // Expanded(
+    //   child: Container(
+    //     decoration:
+    //         BoxDecoration(border: Border.all(color: Colors.black)),
+    //     child: SingleChildScrollView(
+    //       child: Html(
+    //         data:answer,
+    //         style: {
+    //           "p": Style(
+    //             color: Colors.green,
+    //           )},
+    //       ),
+    //     ),
+    //   ),
+    // )
+  ]);
 }

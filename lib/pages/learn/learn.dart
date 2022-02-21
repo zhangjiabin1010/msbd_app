@@ -17,13 +17,11 @@ class _LearnPageState extends State<LearnPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 80),
-      height: 1000,
       alignment: Alignment.center,
       decoration:
           BoxDecoration(border: Border.all(color: Colors.red, width: 5.0)),
       child: Column(
-        children: [SelectGridView()],
+        children: [SelectGridView(),StartLearnButton(context)],
       ),
     );
   }
@@ -43,9 +41,7 @@ class SelectGridView extends StatelessWidget {
     ];
     return Column(children: [
       Container(
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.green, width: 5.0)),
-          height: 500,
+          height: 400,
           child: GridView(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 //横轴元素个数
@@ -60,48 +56,40 @@ class SelectGridView extends StatelessWidget {
               return GetGridView(context, titleList[index], imageList[index]);
             }),
           )),
-      Container(
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.purple, width: 5.0)),
-          height: 200,
-          child: InkWell(
-            onTap: () {
-              Navigator.of(context).push(new MaterialPageRoute(
-                  builder: (BuildContext context) => AnswerShow()));
-            },
-            child: Card(
-                elevation: 5.0, //设置阴影
-                shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                child: Container(
-                  margin: EdgeInsets.only(top: 30),
-                  width: double.infinity,
-                  height: 100,
-                  child: Text(
-                    "开始学习",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 50, fontWeight: FontWeight.w500),
-                  ),
-                )),
-          ))
     ]);
   }
 }
 
-Widget GridRoute(title) {
-  if (title == '关注') {
-    return FocusItemList();
-  } else if (title == '完成') {
-    return FinishedList();
-  } else if (title == '收藏') {
-    return CollectedList();
-  } else if (title == '热榜') {
-    return HotList();
-  } else {
-    return HotList();
-  }
-}
 
+//开始学习按钮组件
+Widget StartLearnButton(context){
+  return Container(
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.purple, width: 5.0)),
+      height: 150,
+      child: InkWell(
+        onTap: () {
+          Navigator.of(context).push(new MaterialPageRoute(
+              builder: (BuildContext context) => AnswerShow()));
+        },
+        child: Card(
+            elevation: 5.0, //设置阴影
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(20.0))),
+            child: Container(
+              margin: EdgeInsets.only(top: 30),
+              width: double.infinity,
+              height: 80,
+              child: Text(
+                "开始学习",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 50, fontWeight: FontWeight.w500),
+              ),
+            )),
+      )
+  );
+}
+//生成学习页面上面的四个选项卡：完成、收藏、热榜、关注
 Widget GetGridView(context, title, image) {
   return InkWell(
     onTap: () {
@@ -134,4 +122,19 @@ Widget GetGridView(context, title, image) {
       ),
     ),
   );
+}
+
+//四个选项卡的跳转逻辑
+Widget GridRoute(title) {
+  if (title == '关注') {
+    return FocusItemList();
+  } else if (title == '完成') {
+    return FinishedList();
+  } else if (title == '收藏') {
+    return CollectedList();
+  } else if (title == '热榜') {
+    return HotList();
+  } else {
+    return HotList();
+  }
 }

@@ -1,8 +1,5 @@
-import 'dart:convert';
-
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:msbd_app/models/ms_question_entity.dart';
+import 'package:msbd_app/models/ms_answer_entity.dart';
 import 'package:msbd_app/pages/widgets/button_icon_text.dart';
 import 'package:msbd_app/services/http.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -18,40 +15,32 @@ class AnswerShow extends StatefulWidget {
 }
 
 class _AnswerShowState extends State<AnswerShow> {
-
-  Data? Answer;
   var _futureBuilderFuture;
 
-
   Future getAnswer() async {
-
     var response = Http.get('ms_answer_show', params: {}, needCode: false);
-        // .then((res) => {
-        //       // Answer = Data.fromJson(res)
-        //   });
     return response;
   }
 
   @override
   initState() {
     super.initState();
+    print('第一次请求');
     _futureBuilderFuture = getAnswer();
+    print('第一次请求');
+
 
   }
 
   void refresh_answer() {
-    setState(() {
-    });
+    print('刷新请求');
+    _futureBuilderFuture = getAnswer();
+    print('刷新请求');
+
   }
 
   @override
   Widget build(BuildContext context) {
-    var question_id = Answer?.id;
-    print('xxxxxxxxxxxxxxxxxx');
-    print(question_id);
-    print('xxxxxxxxxxxxxxxxxx');
-    var title = Answer?.question;
-    var answer = Answer?.answer == null? "":Answer?.answer;
     return Scaffold(
         appBar: AppBar(
           title: Text("888888"),
@@ -79,41 +68,12 @@ class _AnswerShowState extends State<AnswerShow> {
                       return Text('Error: ${snapshot.error}');
                     }
                     // return _createListView(context, snapshot);
-                    return AnswerDetail(context, snapshot);
+                    return AnswerDetailWidget(context, snapshot);
                   default:
                     return Text('还没有开始网络请求');
                 }
               }
             ),
-          // Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          //   Container(
-          //       width: double.infinity,
-          //       padding: EdgeInsets.only(left: 10),
-          //       decoration: BoxDecoration(border: Border.all(color: Colors.red)),
-          //       child: Row(children: [
-          //         Text(
-          //           "${title}",
-          //           textAlign: TextAlign.left,
-          //           style: TextStyle(fontSize: 20, color: Colors.red),
-          //         ),
-          //         IconButton(icon: Icon(Icons.star), onPressed: () {})
-          //       ])),
-          //   Expanded(
-          //     child: Container(
-          //       decoration:
-          //           BoxDecoration(border: Border.all(color: Colors.black)),
-          //       child: SingleChildScrollView(
-          //         child: Html(
-          //           data:answer,
-          //           style: {
-          //             "p": Style(
-          //               color: Colors.green,
-          //             )},
-          //         ),
-          //       ),
-          //     ),
-          //   )
-          // ]),
         bottomSheet: Container(
             height: 90,
             decoration: BoxDecoration(border: Border.all(color: Colors.red)),
@@ -121,17 +81,14 @@ class _AnswerShowState extends State<AnswerShow> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   ButtonIconText(
-                      question_id: question_id,
                       custom_icon: Icons.ac_unit_outlined,
                       custom_text: "收藏",
                       refresh_answer: refresh_answer),
                   ButtonIconText(
-                      question_id: question_id,
                       custom_icon: Icons.add_chart,
                       custom_text: "拿下",
                       refresh_answer: refresh_answer),
                   ButtonIconText(
-                      question_id: question_id,
                       custom_icon: Icons.alarm_on,
                       custom_text: "下一题",
                       refresh_answer: refresh_answer),
@@ -155,8 +112,9 @@ class DrawerQuestionList extends StatelessWidget {
 }
 
 
-Widget AnswerDetail(BuildContext context, AsyncSnapshot snapshot){
+Widget AnswerDetailWidget(BuildContext context, AsyncSnapshot snapshot){
   var answer = snapshot.data;
+  Data? Answer = Data.fromJson(answer);
   return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
     Container(
         width: double.infinity,
@@ -164,7 +122,7 @@ Widget AnswerDetail(BuildContext context, AsyncSnapshot snapshot){
         decoration: BoxDecoration(border: Border.all(color: Colors.red)),
         child: Row(children: [
           Text(
-            "${ answer['question']}",
+            "${ Answer.question }",
             textAlign: TextAlign.left,
             style: TextStyle(fontSize: 20, color: Colors.red),
           ),
@@ -176,7 +134,7 @@ Widget AnswerDetail(BuildContext context, AsyncSnapshot snapshot){
             BoxDecoration(border: Border.all(color: Colors.black)),
         child: SingleChildScrollView(
           child: Html(
-            data:answer['answer'],
+            data:Answer.answer,
             style: {
               "p": Style(
                 color: Colors.green,

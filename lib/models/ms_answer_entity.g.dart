@@ -1,21 +1,19 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'ms_question_entity.dart';
+part of 'ms_answer_entity.dart';
 
 // **************************************************************************
-// JsonSerializableGeneratorasdasdsa
+// JsonSerializableGenerator
 // **************************************************************************
 
-MsQuestionEntity _$MsQuestionEntityFromJson(Map<String, dynamic> json) =>
-    MsQuestionEntity(
+MsAnswerEntity _$MsAnswerEntityFromJson(Map<String, dynamic> json) =>
+    MsAnswerEntity(
       json['code'] as int,
       json['msg'] as String,
-      (json['data'] as List<dynamic>)
-          .map((e) => Data.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      Data.fromJson(json['data'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$MsQuestionEntityToJson(MsQuestionEntity instance) =>
+Map<String, dynamic> _$MsAnswerEntityToJson(MsAnswerEntity instance) =>
     <String, dynamic>{
       'code': instance.code,
       'msg': instance.msg,
@@ -33,7 +31,6 @@ Data _$DataFromJson(Map<String, dynamic> json) => Data(
       json['author'] as String,
       json['createtime'] as String,
       json['updatetime'] as String,
-      json['image'] as String,
     );
 
 Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
@@ -47,5 +44,4 @@ Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
       'author': instance.author,
       'createtime': instance.createtime,
       'updatetime': instance.updatetime,
-      'image': instance.image,
     };

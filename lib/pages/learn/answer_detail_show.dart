@@ -25,13 +25,10 @@ class _AnswerShowState extends State<AnswerShow> {
 
   Future getAnswer() async {
 
-    var response = Http.get('ms_answer_show', params: {}, needCode: false).then((res) => {
-              // Answer = Data.fromJson(res)
-          });
-    print('xxxxxxxxxxxxxxxxxxxxxxxxxx000');
-    print(response);
-    print('xxxxxxxxxxxxxxxxxxxxxxxxxx000');
-
+    var response = Http.get('ms_answer_show', params: {}, needCode: false);
+        // .then((res) => {
+        //       // Answer = Data.fromJson(res)
+        //   });
     return response;
   }
 
@@ -159,6 +156,7 @@ class DrawerQuestionList extends StatelessWidget {
 
 
 Widget AnswerDetail(BuildContext context, AsyncSnapshot snapshot){
+  var answer = snapshot.data;
   return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
     Container(
         width: double.infinity,
@@ -166,26 +164,26 @@ Widget AnswerDetail(BuildContext context, AsyncSnapshot snapshot){
         decoration: BoxDecoration(border: Border.all(color: Colors.red)),
         child: Row(children: [
           Text(
-            "${ snapshot.data['code']}",
+            "${ answer['question']}",
             textAlign: TextAlign.left,
             style: TextStyle(fontSize: 20, color: Colors.red),
           ),
           IconButton(icon: Icon(Icons.star), onPressed: () {})
         ])),
-    // Expanded(
-    //   child: Container(
-    //     decoration:
-    //         BoxDecoration(border: Border.all(color: Colors.black)),
-    //     child: SingleChildScrollView(
-    //       child: Html(
-    //         data:answer,
-    //         style: {
-    //           "p": Style(
-    //             color: Colors.green,
-    //           )},
-    //       ),
-    //     ),
-    //   ),
-    // )
+    Expanded(
+      child: Container(
+        decoration:
+            BoxDecoration(border: Border.all(color: Colors.black)),
+        child: SingleChildScrollView(
+          child: Html(
+            data:answer['answer'],
+            style: {
+              "p": Style(
+                color: Colors.green,
+              )},
+          ),
+        ),
+      ),
+    )
   ]);
 }

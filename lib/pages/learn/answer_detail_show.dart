@@ -1,9 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:msbd_app/models/ms_answer_entity.dart';
 import 'package:msbd_app/pages/widgets/button_icon_text.dart';
 import 'package:msbd_app/services/http.dart';
 import 'package:flutter_html/flutter_html.dart';
-
 
 
 
@@ -18,7 +19,8 @@ class _AnswerShowState extends State<AnswerShow> {
   var _futureBuilderFuture;
 
   Future getAnswer() async {
-    var response = Http.get('ms_answer_show', params: {}, needCode: false);
+    // var response = Http.get('ms_answer_show', params: {}, needCode: false);
+    var response = Http.get('servers_data_handle', params: {}, needCode: false);
     return response;
   }
 
@@ -32,9 +34,12 @@ class _AnswerShowState extends State<AnswerShow> {
 
   }
 
+
   void refresh_answer() {
     print('刷新请求');
     _futureBuilderFuture = getAnswer();
+    setState(() {});
+
     print('刷新请求');
 
   }
@@ -47,33 +52,34 @@ class _AnswerShowState extends State<AnswerShow> {
         ),
         drawer: DrawerQuestionList(),
         body:
-            FutureBuilder(
-              future: _futureBuilderFuture,
-              builder: (BuildContext context, AsyncSnapshot snapshot){
-                switch (snapshot.connectionState) {
-                  case ConnectionState.none:
-                    print('还没有开始网络请求');
-                    return Text('还没有开始网络请求');
-                  case ConnectionState.active:
-                    print('active');
-                    return Text('ConnectionState.active');
-                  case ConnectionState.waiting:
-                    print('waiting');
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  case ConnectionState.done:
-                    print('done');
-                    if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
-                    }
-                    // return _createListView(context, snapshot);
-                    return AnswerDetailWidget(context, snapshot);
-                  default:
-                    return Text('还没有开始网络请求');
-                }
+        FutureBuilder(
+            future: _futureBuilderFuture,
+            builder: (BuildContext context, AsyncSnapshot snapshot){
+              switch (snapshot.connectionState) {
+                case ConnectionState.none:
+                  print('还没有开始网络请求');
+                  return Text('还没有开始网络请求');
+                case ConnectionState.active:
+                  print('active');
+                  return Text('ConnectionState.active');
+                case ConnectionState.waiting:
+                  print('waiting');
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+
+                case ConnectionState.done:
+                  print('done');
+                  if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  }
+                  // return _createListView(context, snapshot);
+                  return AnswerDetailWidget(context, snapshot);
+                default:
+                  return Text('还没有开始网络请求');
               }
-            ),
+            }
+        ),
         bottomSheet: Container(
             height: 90,
             decoration: BoxDecoration(border: Border.all(color: Colors.red)),
@@ -114,6 +120,10 @@ class DrawerQuestionList extends StatelessWidget {
 
 Widget AnswerDetailWidget(BuildContext context, AsyncSnapshot snapshot){
   var answer = snapshot.data;
+  print('xxxxxxxxxxxxxxxxxx');
+  print(answer);
+  print('xxxxxxxxxxxxxxxxxx');
+
   Data? Answer = Data.fromJson(answer);
   return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
     Container(
@@ -131,7 +141,7 @@ Widget AnswerDetailWidget(BuildContext context, AsyncSnapshot snapshot){
     Expanded(
       child: Container(
         decoration:
-            BoxDecoration(border: Border.all(color: Colors.black)),
+        BoxDecoration(border: Border.all(color: Colors.black)),
         child: SingleChildScrollView(
           child: Html(
             data:Answer.answer,
@@ -145,3 +155,4 @@ Widget AnswerDetailWidget(BuildContext context, AsyncSnapshot snapshot){
     )
   ]);
 }
+

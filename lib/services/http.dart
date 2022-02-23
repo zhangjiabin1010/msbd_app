@@ -9,9 +9,10 @@ class Http {
   // dio 的 options 配置
   static BaseOptions _options = new BaseOptions(
     baseUrl: baseUrl, // 请求的baseUrl
-    connectTimeout: 10000, // 连接超时时间
-    receiveTimeout: 15000, // 响应超时时间
-    contentType: contentType['form'],
+    connectTimeout: 5000, // 连接超时时间
+    receiveTimeout: 5000, // 响应超时时间
+    // contentType: contentType['form'],
+    contentType: contentType['json'],
   );
 
   // get 请求
@@ -54,6 +55,7 @@ class Http {
       cancelToken) async {
     // 处理URL ，通过 urlName 在 urlPath 中匹配相应的 url 路径地址
     String url = urlPath[urlName];
+
     // get请求处理
     if (pathParams != null) {
       // 处理  https://test_api.com/user/:id/:name => https://test_api.com/user/123/zhangsan  请求连接
@@ -108,6 +110,7 @@ class Http {
     //   print(333);
     // }));
 
+
     Response? response;
     // dio 请求处理
     try {
@@ -115,6 +118,9 @@ class Http {
           data: params,
           options: Options(method: method),
           cancelToken: cancelToken);
+      print('xxxxxxxxxxxxxxxx');
+      print(response.realUri);
+      print('xxxxxxxxxxxxxxxx');
     } on DioError catch (e) {
       // 请求错误处理  ,错误码 e.response.statusCode
       print('请求错误处理： ${e.response!.statusCode}');
@@ -127,6 +133,7 @@ class Http {
         }
       }
     }
+
     if (response == null) {
       print('响应错误');
     } else if (needCode) {
@@ -156,12 +163,3 @@ class Http {
 
 
 
-
-// 调用
-// 需要使用请求的文件中引入封装的 Dio 文件
-// import 'package:new_flutter/services/http.dart';
-
-// // 组件中调用
-// Http.get( 'sms', params:{'mobile':'13111111112'}).then( (res)=>{
-//     print('发送请求：$res')
-// });

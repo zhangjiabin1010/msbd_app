@@ -18,14 +18,14 @@ class _LearnPageState extends State<LearnPage> {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      decoration:
-          BoxDecoration(border: Border.all(color: Colors.red, width: 5.0)),
+      margin: EdgeInsets.only(top:30),
       child: Column(
         children: [SelectGridView(),StartLearnButton(context)],
       ),
     );
   }
 }
+
 
 class SelectGridView extends StatelessWidget {
   const SelectGridView({Key? key}) : super(key: key);
@@ -39,55 +39,66 @@ class SelectGridView extends StatelessWidget {
       "assets/images/3.png",
       "assets/images/4.png"
     ];
-    return Column(children: [
-      Container(
-          height: 400,
-          child: GridView(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                //横轴元素个数
-                crossAxisCount: 2,
-                //纵轴间距
-                mainAxisSpacing: 10.0,
-                //横轴间距
-                crossAxisSpacing: 10.0,
-                //子组件宽高长度比例
-                childAspectRatio: 1.4),
-            children: List<Widget>.generate(titleList.length, (index) {
-              return GetGridView(context, titleList[index], imageList[index]);
-            }),
-          )),
-    ]);
+    return Expanded(
+        child: GridView(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              //横轴元素个数
+              crossAxisCount: 2,
+              //纵轴间距
+              mainAxisSpacing: 10.0,
+              //横轴间距
+              crossAxisSpacing: 10.0,
+              //子组件宽高长度比例
+              childAspectRatio: 1.4),
+          // shrinkWrap: true,
+          children: List<Widget>.generate(titleList.length, (index) {
+            return GetGridView(context, titleList[index], imageList[index]);
+          }),
+        )
+      );
   }
 }
 
 
 //开始学习按钮组件
 Widget StartLearnButton(context){
-  return Container(
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.purple, width: 5.0)),
-      height: 150,
+  return Expanded(child:
+    Container(
+      // padding: EdgeInsets.only(top:50),
+      decoration: new BoxDecoration(//背景
+        color: Colors.white,
+        //设置四周圆角 角度
+        borderRadius: BorderRadius.all(Radius.circular(4.0)),
+        //设置四周边框
+        border: new Border.all(width: 1, color: Colors.red),
+      ),
+      alignment: Alignment.center,
+      // height: 400,
+      child:
+        SizedBox(
+      width: 230.0,
+      height: 130.0,
+
       child: InkWell(
         onTap: () {
           Navigator.of(context).push(new MaterialPageRoute(
               builder: (BuildContext context) => AnswerShow()));
         },
-        child: Card(
+        child:
+          Card(
             elevation: 5.0, //设置阴影
             shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(20.0))),
-            child: Container(
-              margin: EdgeInsets.only(top: 30),
-              width: double.infinity,
-              height: 80,
-              child: Text(
-                "开始学习",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 50, fontWeight: FontWeight.w500),
-              ),
-            )),
-      )
-  );
+                borderRadius: BorderRadius.all(Radius.circular(10.0))),
+            child: Align(
+                alignment: Alignment.center,
+                child: Text(
+                  "开始学习",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 50, fontWeight: FontWeight.w500),
+              )),
+            ),
+
+  ))));
 }
 //生成学习页面上面的四个选项卡：完成、收藏、热榜、关注
 Widget GetGridView(context, title, image) {
@@ -98,23 +109,24 @@ Widget GetGridView(context, title, image) {
     },
     child: Card(
       elevation: 5.0, //设置阴影
+
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20.0))),
       child: Column(
         children: [
           Expanded(
               child: Container(
-            child: Image.asset(image),
-            width: 50,
-            height: 50,
-          )),
+                child: Image.asset(image),
+                width: 50,
+                height: 50,
+              )),
           Expanded(
             child: Container(
                 padding: EdgeInsets.only(top: 8),
                 alignment: Alignment.center,
                 child: Text(
                   "${title}",
-                  style:
+                style:
                       TextStyle(color: Colors.grey, fontSize: 18, height: 1.2),
                 )),
           )

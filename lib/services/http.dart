@@ -118,9 +118,6 @@ class Http {
           data: params,
           options: Options(method: method),
           cancelToken: cancelToken);
-      print('xxxxxxxxxxxxxxxx');
-      print(response.realUri);
-      print('xxxxxxxxxxxxxxxx');
     } on DioError catch (e) {
       // 请求错误处理  ,错误码 e.response.statusCode
       print('请求错误处理： ${e.response!.statusCode}');

@@ -1,35 +1,53 @@
-import 'dart:async';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:msbd_app/models/ms_answer_entity.dart';
 import 'package:msbd_app/services/http.dart';
-import 'package:flutter_html/flutter_html.dart';
-import 'package:provider/provider.dart';
 
 
-class AnswerModel with ChangeNotifier {
-
-  int counter = 0;
 
 
-  void nextQuestion(){
-    counter ++;
-    print(counter);
-    notifyListeners();
-  }
+
+
+class AnswerShow extends StatefulWidget {
+  const AnswerShow({Key? key}) : super(key: key);
+
+  @override
+  _AnswerShowState createState() => _AnswerShowState();
 }
 
-class AnswerDetail extends StatelessWidget {
-  const AnswerDetail({Key? key}) : super(key: key);
+class _AnswerShowState extends State<AnswerShow> {
+  String? answer;
+  String? question;
+
+  Future getAnswer() async {
+    var response = await Http.get('servers_data_handle', params: {}, needCode: false).then((data){
+      Data answer_data = Data.fromJson(data);
+      setState(() {
+        question = answer_data.question;
+        answer = answer_data.answer;
+      });
+    });
+    return response;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getAnswer();
+
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (question == null){
+      return Scaffold(body: Center(
+        child: CupertinoActivityIndicator(),
+      ),);
+    }
     return Scaffold(
         appBar: AppBar(
-          // title: Text('${context.watch<AnswerModel>().counter}'),
-          title: Consumer<AnswerModel>(builder: (context, answer, child){
-            return Text('${answer.counter}');
-          })
+          title: Text("${question}"),
         ),
         // drawer: DrawerQuestionList(),
         body: Column(
@@ -41,11 +59,11 @@ class AnswerDetail extends StatelessWidget {
                   BoxDecoration(border: Border.all(color: Colors.black)),
                   child: SingleChildScrollView(
                     child: Html(
-                      data: "asd",
-                      style: {
-                        "p": Style(
-                          color: Colors.green,
-                        )},
+                      data: answer,
+                      // style: {
+                      //   "p": Style(
+                      //     color: Colors.green,
+                      //   )},
                     ),
                   ),
                 ),
@@ -55,38 +73,38 @@ class AnswerDetail extends StatelessWidget {
           height: 90,
           decoration: BoxDecoration(border: Border.all(color: Colors.red)),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              InkWell(
-                onTap: () {
-                  final answer = context.read<AnswerModel>();
-                  answer.nextQuestion();
-                  // context.read<AnswerModel>().nextQuestion();
-                },
-                child: Card(
-                    child: Text(
-                      "下一题",
-                      style: TextStyle(
-                          color: Colors.grey, fontSize: 18, height: 1.2),
-                    )),
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+              Expanded(child:IconButton(
+                  icon:Icon(Icons.delete),
+                  onPressed: (){
+                    print("图标按钮");
+                  },
+                )
               ),
-            ],
-          ),
-        ));
+            Expanded(child:IconButton(
+              icon:Icon(Icons.star),
+              onPressed: (){
+                print("图标按钮");
+              },
+              )
+            ),
+            Expanded(child:IconButton(
+              icon:Icon(Icons.chevron_left),
+              onPressed: (){
+                print("图标按钮");
+              },
+            )
+            ),
+            Expanded(child:IconButton(
+              icon:Icon(Icons.chevron_right),
+              onPressed: (){
+                print("图标按钮");
+              },
+            )
+            ),
+          ],
+        ),
+    ));
   }
 }
-
-
-class AnswerShow extends StatelessWidget {
-  const AnswerShow({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-
-    return ChangeNotifierProvider(
-          create: (context) => AnswerModel(),
-          child: AnswerDetail()
-        );
-  }
-}
-

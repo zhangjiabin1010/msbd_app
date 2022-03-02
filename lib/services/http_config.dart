@@ -6,9 +6,8 @@ const String baseUrl = 'http://49.232.124.98/';
 // http://49.232.124.98:8888/servers_data_handle/
 // 请求连接
 const Map urlPath = {
-  'ms_question_show': '/ms_question_show',
-  'ms_answer_show': '/ms_answer_show',
-  'servers_data_handle': '/servers_data_handle',
+  'ms_qa_query': '/ms_qa_query',
+  'article_query': '/article_query',
 };
 
 // content-type

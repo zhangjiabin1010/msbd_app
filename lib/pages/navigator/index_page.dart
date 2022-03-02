@@ -37,7 +37,7 @@ class _IndexPageState extends State<IndexPage> {
     ),
   ];
 
-  final pages = [HomePage(), LearnPage(), DiscussPage(), PersonPage()];
+  final pages = [HomePage(), LearnPage(), DiscussPage(), PersonHomePage()];
 
   late int currentIndex;
   @override
@@ -49,12 +49,12 @@ class _IndexPageState extends State<IndexPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Color(0x44000000),
-        title: Text("底部导航栏"),
-      ),
+      // extendBodyBehindAppBar: true,
+      // appBar: AppBar(
+      //   elevation: 0,
+      //   backgroundColor: Color(0x44000000),
+      //   title: Text("底部导航栏"),
+      // ),
       bottomNavigationBar: BottomNavigationBar(
         items: bottomNavItems,
         currentIndex: currentIndex,

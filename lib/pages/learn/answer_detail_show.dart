@@ -21,7 +21,7 @@ class _AnswerShowState extends State<AnswerShow> {
   String? question;
 
   Future getAnswer() async {
-    var response = await Http.get('servers_data_handle', params: {}, needCode: false).then((data){
+    var response = await Http.get('ms_qa_query', params: {}, needCode: false).then((data){
       Data answer_data = Data.fromJson(data);
       setState(() {
         question = answer_data.question;
@@ -55,8 +55,6 @@ class _AnswerShowState extends State<AnswerShow> {
             children: [
               Expanded(
                 child: Container(
-                  decoration:
-                  BoxDecoration(border: Border.all(color: Colors.black)),
                   child: SingleChildScrollView(
                     child: Html(
                       data: answer,
@@ -71,7 +69,7 @@ class _AnswerShowState extends State<AnswerShow> {
             ]),
         bottomSheet: Container(
           height: 90,
-          decoration: BoxDecoration(border: Border.all(color: Colors.red)),
+          // decoration: BoxDecoration(border: ),
           child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -99,7 +97,8 @@ class _AnswerShowState extends State<AnswerShow> {
             Expanded(child:IconButton(
               icon:Icon(Icons.chevron_right),
               onPressed: (){
-                print("图标按钮");
+                getAnswer();
+                print("下一题");
               },
             )
             ),

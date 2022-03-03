@@ -5,8 +5,6 @@ import 'package:msbd_app/pages/learn/answer_detail_show.dart';
 import 'pages/navigator/index_page.dart';
 import 'package:provider/provider.dart';
 
-
-
 void main() {
   // runApp(
   // MultiProvider(
@@ -16,7 +14,6 @@ void main() {
   //   child: const MyApp(),
   // ));
   runApp(const MyApp());
-
 }
 
 class MyApp extends StatelessWidget {
@@ -28,8 +25,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'msbd',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+          primaryColor: Colors.red,
+          scaffoldBackgroundColor: Colors.white,
+          appBarTheme: AppBarTheme(
+              // backgroundColor: Colors.grey,
+              foregroundColor: Colors.black)),
       home: IndexPage(),
     );
   }

@@ -24,11 +24,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'msbd',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
           primaryColor: Colors.red,
           scaffoldBackgroundColor: Colors.white,
           appBarTheme: AppBarTheme(
-              // backgroundColor: Colors.grey,
+              backgroundColor: Colors.white,
               foregroundColor: Colors.black)),
       home: IndexPage(),
     );

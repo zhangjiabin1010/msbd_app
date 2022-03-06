@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:msbd_app/pages/discuss/discuss_appbar.dart';
+import 'package:msbd_app/pages/discuss/discuss_category.dart';
 import 'package:msbd_app/pages/discuss/discuss_hot.dart';
+import 'package:msbd_app/pages/discuss/discuss_latest.dart';
+import 'package:msbd_app/pages/discuss/discuss_recommend.dart';
+
 
 
 class DiscussPage extends StatelessWidget {
@@ -9,7 +13,7 @@ class DiscussPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        length: 2,
+        length: 4,
         child: Scaffold(
             body: NestedScrollView(
               headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
@@ -30,6 +34,8 @@ class DiscussPage extends StatelessWidget {
                       unselectedLabelColor: Colors.black,
                       tabs: [
                         Tab(text: "热门"),
+                        Tab(text: "推荐"),
+                        Tab(text: "最新"),
                         Tab(text: "分类"),
                       ],
                     ),
@@ -39,7 +45,10 @@ class DiscussPage extends StatelessWidget {
               body: TabBarView(
                 children: [
                   DiscussHotArticle(),
-                  Icon(Icons.directions_transit, size: 350),
+                  DiscussRecommend(),
+                  DiscussLatest(),
+                  DiscussCategory(),
+
                 ],
               ),
             )));

@@ -50,22 +50,23 @@ class _ArticleListState extends State<ArticleList> {
 
 
     return ListView.separated(
-        itemCount: 2,
+        itemCount: list.data.length,
         itemBuilder: (context,index){
+          Data item = list.data[index];
           return ListTile(
-              title: Text("测测试测试测试测试测试测试测试测试测试测试测试测试测试试"),
+              title: Text("${item.title}"),
               subtitle: Row(children:[
-                Text("admin"),
+                Text("${item.author}"),
                 Container(
                     margin:EdgeInsets.only(left: 20),
-                    child: Text("158评论")),
+                    child: Text("${item.comment}")),
                 Spacer(flex: 2),
                 Container(
                   margin:EdgeInsets.only(right: 5),
 
                   alignment: Alignment.bottomRight,
                   // margin:EdgeInsets.only(left: 20),
-                  child: Text("2020-05-12 20:00"),)
+                  child: Text("${item.createtime}"),)
 
               ]),
           );

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:msbd_app/models/article_entity.dart';
 import 'package:msbd_app/services/http.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 
 
@@ -44,15 +45,29 @@ class _ArticleListState extends State<ArticleList> {
         child: CupertinoActivityIndicator(),
       ),);
     }
-
     ArticleListModel list = ArticleListModel.fromJson(articleListData!);
-    print(list.data[0].comment);
+    var article = list.data;
+    RefreshController _refreshController = RefreshController(initialRefresh: false);
+
+    void _onRefresh() async{
+      // monitor network fetch
+      await Future.delayed(Duration(milliseconds: 1000));
+      // if failed,use refreshFailed()
+      _refreshController.refreshCompleted();
+    }
 
 
-    return ListView.separated(
-        itemCount: list.data.length,
+
+    return SmartRefresher(
+        enablePullDown: true,
+        enablePullUp: true,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        child:ListView.separated(
+        itemCount: article.length,
         itemBuilder: (context,index){
-          Data item = list.data[index];
+          Data item = article[index];
           return ListTile(
               title: Text("${item.title}"),
               subtitle: Row(children:[
@@ -67,7 +82,6 @@ class _ArticleListState extends State<ArticleList> {
                   alignment: Alignment.bottomRight,
                   // margin:EdgeInsets.only(left: 20),
                   child: Text("${item.createtime}"),)
-
               ]),
           );
         },
@@ -75,7 +89,8 @@ class _ArticleListState extends State<ArticleList> {
           return Divider(color: Colors.purple);
         },
         shrinkWrap: true
-        );
+        ))
+    ;
   }
 }
 

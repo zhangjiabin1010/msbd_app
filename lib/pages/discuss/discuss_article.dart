@@ -1,4 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:msbd_app/models/article_entity.dart';
+import 'package:msbd_app/services/http.dart';
+
 
 
 class ArticleList extends StatefulWidget {
@@ -9,8 +13,42 @@ class ArticleList extends StatefulWidget {
 }
 
 class _ArticleListState extends State<ArticleList> {
+
+
+  List? articleListData;
+
+  Future _getArticleList() async{
+    await Http.get('article_query', params: {}, needCode: true).then((data) {
+      setState((){
+        articleListData = data["data"];
+      });
+    });
+  }
+
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getArticleList();
+
+  }
+
   @override
   Widget build(BuildContext context) {
+
+
+    if (articleListData == null){
+      return Scaffold(body: Center(
+        child: CupertinoActivityIndicator(),
+      ),);
+    }
+
+    ArticleListModel list = ArticleListModel.fromJson(articleListData!);
+    print(list.data[0].comment);
+
+
     return ListView.separated(
         itemCount: 2,
         itemBuilder: (context,index){
@@ -39,3 +77,4 @@ class _ArticleListState extends State<ArticleList> {
         );
   }
 }
+

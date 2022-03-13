@@ -1,137 +1,124 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'collected.dart';
-import 'finished.dart';
-import 'focus.dart';
-import 'hotlist.dart';
-import 'answer_detail_show.dart';
-
-
-
+import 'package:msbd_app/pages/learn/learn_question_list.dart';
+import 'package:msbd_app/pages/widgets/search_bar.dart';
 
 class LearnPage extends StatelessWidget {
-  const LearnPage({Key? key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Container(child:
-            Column(
-                children: [SelectGridView(),StartLearnButton(context)],
-       )
-    );
-  }
-}
-
-
-
-class SelectGridView extends StatelessWidget {
-  const SelectGridView({Key? key}) : super(key: key);
+  final language;
+  const LearnPage({Key? key,this.language}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    const List<String> titleList = ["热榜", "收藏", "关注", "完成"];
-    const List<String> imageList = [
-      "assets/images/1.png",
-      "assets/images/2.png",
-      "assets/images/3.png",
-      "assets/images/4.png"
-    ];
-    return Expanded(child:Container(
-            padding: EdgeInsets.only(top:130.0,left:20.0,right:20.0),
-            child: GridView(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                //横轴元素个数
-                crossAxisCount: 2,
-                //纵轴间距
-                mainAxisSpacing: 10.0,
-                //横轴间距
-                crossAxisSpacing: 10.0,
-                //子组件宽高长度比例
-                childAspectRatio: 1.4),
-            // shrinkWrap: true,
-            children: List<Widget>.generate(titleList.length, (index) {
-              return GetGridView(context, titleList[index], imageList[index]);
-            }),
-          )
-    ));
-  }
-}
-
-
-Widget StartLearnButton(context){
-  return Container(
-    margin: EdgeInsets.only(bottom:150),
-    padding: EdgeInsets.only(left: 50.0,right: 50.0),
-    child: SizedBox(
-      width: 280.0,
-      height: 150.0,
-      child: Card(
-        elevation: 5.0, //设置阴影
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10.0))),
-        child: TextButton(
-        onPressed:(){
-          Navigator.of(context).push(new MaterialPageRoute(
-              builder: (BuildContext context) => AnswerShow()));
-        },
-        child:Text("开始",style: TextStyle(color: Colors.grey[800]),),
-        style: ButtonStyle(
-          textStyle:MaterialStateProperty.all(
-            TextStyle(fontSize: 50)),
-          // backgroundColor: MaterialStateProperty.all(Colors.red),
+    const List<Map<String, dynamic>> languageList = [
+      {
+        "name": "java",
+        "leadingIcon": Icon(
+          IconData(
+            0xe639,
+            fontFamily: "Alibaba",
           ),
-        ),
-      )
-    )
-  );
-}
+          color: Colors.red,
+        )
+      },
+      {
+        "name": "前端",
+        "leadingIcon":
+            Icon(IconData(0xe606, fontFamily: "Alibaba"), color: Colors.green)
+      },
+      {
+        "name": "Python",
+        "leadingIcon": Icon(IconData(0xe690, fontFamily: "Alibaba"),
+            color: Colors.pinkAccent)
+      },
+      {
+        "name": "Php",
+        "leadingIcon":
+            Icon(IconData(0xe67e, fontFamily: "Alibaba"), color: Colors.blue)
+      },
+      {
+        "name": "Go",
+        "leadingIcon":
+            Icon(IconData(0xe61a, fontFamily: "Alibaba"), color: Colors.blue)
+      },
+      {
+        "name": "Ruby",
+        "leadingIcon":
+            Icon(IconData(0xe68e, fontFamily: "Alibaba"), color: Colors.red)
+      },
+      {
+        "name": "数据库",
+        "leadingIcon": Icon(IconData(0xe620, fontFamily: "Alibaba"),
+            color: Colors.tealAccent)
+      },
+      {
+        "name": "容器构建",
+        "leadingIcon":
+            Icon(IconData(0xe8a3, fontFamily: "Alibaba"), color: Colors.cyan)
+      },
+      {
+        "name": "架构设计",
+        "leadingIcon":
+            Icon(IconData(0xe632, fontFamily: "Alibaba"), color: Colors.orange)
+      },
+      {
+        "name": "网络及安全",
+        "leadingIcon": Icon(IconData(0xe752, fontFamily: "Alibaba"),
+            color: Colors.redAccent)
+      },
+      {
+        "name": "其他",
+        "leadingIcon": Icon(IconData(0xe61a, fontFamily: "Alibaba"),
+            color: Colors.deepPurpleAccent)
+      },
+    ];
 
-Widget GetGridView(context, title, image) {
-  return InkWell(
-    onTap: () {
-      Navigator.of(context).push(new MaterialPageRoute(
-          builder: (BuildContext context) => GridRoute(title)));
-    },
-    child: Card(
-      elevation: 5.0, //设置阴影
+    return  Scaffold(
+          endDrawerEnableOpenDragGesture: false,
+          appBar: AppBar(
+            actions: <Widget>[
+              IconButton (icon:Icon(Icons.search,color: Colors.lightBlue,), tooltip:'搜索',onPressed:(){
+                showSearch(context: context, delegate: SearchBarDelegate());},),
+              IconButton(icon:Icon(Icons.folder_special,color: Colors.lightBlue,), tooltip: '收藏夹', onPressed: (){
 
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20.0))),
+              },),
+            ]
+          ),
+          body: Container(child: QuestionList()),
+          drawer: buildDrawer(languageList),
+        );
+  }
+
+  Drawer buildDrawer(List<Map<String, dynamic>> languageList) {
+    return Drawer(
+        child: Container(
       child: Column(
         children: [
-          Expanded(
-              child: Container(
-                child: Image.asset(image),
-                width: 50,
-                height: 50,
-              )),
-          Expanded(
-            child: Container(
-                padding: EdgeInsets.only(top: 8),
-                alignment: Alignment.center,
-                child: Text(
-                  "${title}",
-                style:
-                      TextStyle(color: Colors.grey, fontSize: 18, height: 1.2),
-                )),
+          Container(
+              margin: EdgeInsets.only(top: 20),
+              child: Text("选择语言",
+                  style: TextStyle(color: Colors.red, fontSize: 17),
+                  textAlign: TextAlign.left)),
+          Container(
+            margin: EdgeInsets.only(top: 30),
+            child: ListView.builder(
+                itemCount: languageList.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    leading: languageList[index]["leadingIcon"],
+                    title: Text("${languageList[index]["name"]}"),
+                    trailing: Icon(Icons.keyboard_arrow_right),
+                    onTap:(){
+                      String language = languageList[index]["name"];
+                      print(language);
+                      LearnPage(language: language);
+                      Navigator .pop(context);
+
+                    }
+                  );
+                }),
           )
         ],
       ),
-    ),
-  );
-}
-
-//四个选项卡的跳转逻辑
-Widget GridRoute(title) {
-  if (title == '关注') {
-    return FocusItemList();
-  } else if (title == '完成') {
-    return FinishedList();
-  } else if (title == '收藏') {
-    return CollectedList();
-  } else if (title == '热榜') {
-    return HotList();
-  } else {
-    return HotList();
+    ));
   }
 }

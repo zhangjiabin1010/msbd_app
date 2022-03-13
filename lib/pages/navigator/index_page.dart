@@ -15,21 +15,23 @@ class IndexPage extends StatefulWidget {
 
 class _IndexPageState extends State<IndexPage> {
   final List<BottomNavigationBarItem> bottomNavItems = [
+    // BottomNavigationBarItem(
+    //   backgroundColor: Colors.blue,
+    //   icon: Icon(Icons.home),
+    //   label: "首页",
+    // ),
     BottomNavigationBarItem(
-      backgroundColor: Colors.blue,
-      icon: Icon(Icons.home),
-      label: "首页",
+      backgroundColor: Colors.amber,
+      icon: Icon(Icons.question_answer),
+      label: "讨论",
     ),
+
     BottomNavigationBarItem(
       backgroundColor: Colors.green,
       icon: Icon(Icons.local_library),
       label: "学习",
     ),
-    BottomNavigationBarItem(
-      backgroundColor: Colors.amber,
-      icon: Icon(Icons.question_answer),
-      label: "热议",
-    ),
+
     BottomNavigationBarItem(
       backgroundColor: Colors.red,
       icon: Icon(Icons.person),
@@ -37,7 +39,8 @@ class _IndexPageState extends State<IndexPage> {
     ),
   ];
 
-  final pages = [HomePage(), LearnPage(), DiscussPage(), PersonHomePage()];
+  // final pages = [HomePage(), LearnPage(), DiscussPage(), PersonHomePage()];
+  final pages = [DiscussPage(), LearnPage(),  PersonHomePage()];
 
   late int currentIndex;
   @override

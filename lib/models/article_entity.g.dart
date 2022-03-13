@@ -40,4 +40,14 @@ Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
       'comment': instance.comment,
     };
 
+ArticleListModel _$ArticleListModelFromJson(Map<String, dynamic> json) =>
+    ArticleListModel(
+      (json['data'] as List<dynamic>)
+          .map((e) => Data.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
 
+Map<String, dynamic> _$ArticleListModelToJson(ArticleListModel instance) =>
+    <String, dynamic>{
+      'data': instance.data,
+    };

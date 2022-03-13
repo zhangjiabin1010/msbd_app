@@ -8,6 +8,7 @@ const String baseUrl = 'http://49.232.124.98/';
 const Map urlPath = {
   'ms_qa_query': '/ms_qa_query',
   'article_query': '/article_query',
+  'ms_question_list_query': '/ms_question_list_query',
 };
 
 // content-type

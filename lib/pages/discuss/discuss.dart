@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:msbd_app/pages/discuss/discuss_appbar.dart';
+import 'package:msbd_app/pages/discuss/discuss_article.dart';
 import 'package:msbd_app/pages/discuss/discuss_category.dart';
-import 'package:msbd_app/pages/discuss/discuss_hot.dart';
-import 'package:msbd_app/pages/discuss/discuss_latest.dart';
-import 'package:msbd_app/pages/discuss/discuss_recommend.dart';
 
 
 
@@ -44,10 +42,14 @@ class DiscussPage extends StatelessWidget {
               },
               body: TabBarView(
                 children: [
-                  DiscussHotArticle(),
-                  DiscussRecommend(),
-                  DiscussLatest(),
-                  DiscussCategory(),
+                  Text("1"),
+                  Text("2"),
+                  Text("3"),
+                  Text("4"),
+                  // ArticleList(type: "hot",),
+                  // ArticleList(type: "recommend",),
+                  // ArticleList(type: "news",),
+                  // DiscussCategory(),
 
                 ],
               ),

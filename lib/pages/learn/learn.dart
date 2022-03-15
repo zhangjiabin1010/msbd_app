@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:msbd_app/pages/learn/learn_question_list.dart';
 import 'package:msbd_app/pages/widgets/search_bar.dart';
 
+
+
 class LearnPage extends StatelessWidget {
-  final language;
-  const LearnPage({Key? key,this.language}) : super(key: key);
+  const LearnPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class LearnPage extends StatelessWidget {
       {
         "name": "前端",
         "leadingIcon":
-            Icon(IconData(0xe606, fontFamily: "Alibaba"), color: Colors.green)
+        Icon(IconData(0xe606, fontFamily: "Alibaba"), color: Colors.green)
       },
       {
         "name": "Python",
@@ -32,17 +33,17 @@ class LearnPage extends StatelessWidget {
       {
         "name": "Php",
         "leadingIcon":
-            Icon(IconData(0xe67e, fontFamily: "Alibaba"), color: Colors.blue)
+        Icon(IconData(0xe67e, fontFamily: "Alibaba"), color: Colors.blue)
       },
       {
         "name": "Go",
         "leadingIcon":
-            Icon(IconData(0xe61a, fontFamily: "Alibaba"), color: Colors.blue)
+        Icon(IconData(0xe61a, fontFamily: "Alibaba"), color: Colors.blue)
       },
       {
         "name": "Ruby",
         "leadingIcon":
-            Icon(IconData(0xe68e, fontFamily: "Alibaba"), color: Colors.red)
+        Icon(IconData(0xe68e, fontFamily: "Alibaba"), color: Colors.red)
       },
       {
         "name": "数据库",
@@ -52,73 +53,50 @@ class LearnPage extends StatelessWidget {
       {
         "name": "容器构建",
         "leadingIcon":
-            Icon(IconData(0xe8a3, fontFamily: "Alibaba"), color: Colors.cyan)
+        Icon(IconData(0xe8a3, fontFamily: "Alibaba"), color: Colors.cyan)
       },
       {
         "name": "架构设计",
         "leadingIcon":
-            Icon(IconData(0xe632, fontFamily: "Alibaba"), color: Colors.orange)
+        Icon(IconData(0xe632, fontFamily: "Alibaba"), color: Colors.orange)
       },
       {
         "name": "网络及安全",
         "leadingIcon": Icon(IconData(0xe752, fontFamily: "Alibaba"),
             color: Colors.redAccent)
       },
-      {
-        "name": "其他",
-        "leadingIcon": Icon(IconData(0xe61a, fontFamily: "Alibaba"),
-            color: Colors.deepPurpleAccent)
-      },
     ];
 
-    return  Scaffold(
-          endDrawerEnableOpenDragGesture: false,
-          appBar: AppBar(
-            actions: <Widget>[
-              IconButton (icon:Icon(Icons.search,color: Colors.lightBlue,), tooltip:'搜索',onPressed:(){
-                showSearch(context: context, delegate: SearchBarDelegate());},),
-              IconButton(icon:Icon(Icons.folder_special,color: Colors.lightBlue,), tooltip: '收藏夹', onPressed: (){
 
-              },),
-            ]
-          ),
-          body: Container(child: QuestionList()),
-          drawer: buildDrawer(languageList),
-        );
-  }
-
-  Drawer buildDrawer(List<Map<String, dynamic>> languageList) {
-    return Drawer(
-        child: Container(
-      child: Column(
-        children: [
-          Container(
-              margin: EdgeInsets.only(top: 20),
-              child: Text("选择语言",
-                  style: TextStyle(color: Colors.red, fontSize: 17),
-                  textAlign: TextAlign.left)),
-          Container(
-            margin: EdgeInsets.only(top: 30),
-            child: ListView.builder(
-                itemCount: languageList.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return ListTile(
+    return Scaffold(body: Container(child: Column(
+      children: [
+        Container(
+            margin: EdgeInsets.only(top: 10),
+            child: Text("选择语言",
+                style: TextStyle(color: Colors.red, fontSize: 17),
+                textAlign: TextAlign.left)),
+        Container(
+          margin: EdgeInsets.only(top: 20),
+          child: ListView.builder(
+              itemCount: languageList.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return ListTile(
                     leading: languageList[index]["leadingIcon"],
                     title: Text("${languageList[index]["name"]}"),
                     trailing: Icon(Icons.keyboard_arrow_right),
                     onTap:(){
                       String language = languageList[index]["name"];
-                      print(language);
-                      LearnPage(language: language);
-                      Navigator .pop(context);
+                      Navigator.of(context).push(new MaterialPageRoute(
+                          builder: (BuildContext context) => QuestionList(language:language),));
+
 
                     }
-                  );
-                }),
-          )
-        ],
-      ),
-    ));
+                );
+              }),
+        )
+      ],
+    ),),);
   }
 }
+

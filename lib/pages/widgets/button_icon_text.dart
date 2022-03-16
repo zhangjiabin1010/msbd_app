@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:msbd_app/pages/learn/answer_detail_show.dart';
+import 'package:msbd_app/pages/learn/learn_answer_show.dart';
 
 class ButtonIconText extends StatelessWidget {
   final refresh_answer;

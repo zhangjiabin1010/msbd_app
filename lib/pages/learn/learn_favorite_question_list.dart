@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:msbd_app/models/question_list_entity.dart';
 import 'package:msbd_app/pages/learn/learn_answer_show.dart';
 import 'package:msbd_app/pages/widgets/search_bar.dart';
+import 'package:msbd_app/pages/widgets/toastTip.dart';
 import 'package:msbd_app/services/http.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 
 
@@ -114,29 +114,21 @@ class FavoriteIcon extends StatefulWidget {
 }
 
 class _FavoriteIconState extends State<FavoriteIcon> {
-  Color iconColor = Colors.deepOrange;
-  String msg = "";
-  bool selectedStatus = true;
+  //在这里根据id查询用户是否收藏了该文章
+  bool selectedStatus = false;
+
   @override
   Widget build(BuildContext context) {
+    String msg = selectedStatus ? "已取消收藏" : "已收藏~";
+
+    Color iconColor = selectedStatus? Colors.deepOrange:Colors.grey;
+    // String msg = "";
 
     return IconButton(icon:Icon(Icons.star,color: iconColor,),onPressed:(){
       setState(() {
-        print(selectedStatus);
-        iconColor = selectedStatus ? Colors.grey : Colors.deepOrange;
-        msg = selectedStatus ? "已取消收藏" : "收藏成功~";
-        selectedStatus = selectedStatus ? false : true;
-
-
+        selectedStatus = !selectedStatus;
       });
-    Fluttertoast.showToast(
-    msg: msg,
-    gravity: ToastGravity.CENTER,
-    webPosition: "center",
-    timeInSecForIosWeb: 1,
-    backgroundColor: Colors.blueGrey,
-    textColor: Colors.white,
-    fontSize: 14.0);
+      ShowToast(msg);
 
     });
   }

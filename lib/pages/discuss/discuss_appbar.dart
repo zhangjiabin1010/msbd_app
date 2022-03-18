@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:msbd_app/pages/person/person.dart';
 import 'package:msbd_app/pages/widgets/search_bar.dart';
 import 'package:badges/badges.dart';
 
@@ -15,11 +16,16 @@ class DiscussAppBar extends StatelessWidget {
           margin: EdgeInsets.only(right: 20),
           width: 38,
           height: 38,
-          child: CircleAvatar(
-            radius: 38,
-            backgroundImage: NetworkImage(
-                "https://img2.baidu.com/it/u=1814268193,3619863984&fm=253&fmt=auto&app=138&f=JPEG?w=632&h=500"),
-          ),
+          child: InkWell(
+            onTap: (){
+              Navigator.of(context).push(new MaterialPageRoute(
+                builder: (BuildContext context) => PersonHomePage(),));
+            },
+            child: CircleAvatar(
+              radius: 38,
+              backgroundImage: NetworkImage(
+                  "https://img2.baidu.com/it/u=1814268193,3619863984&fm=253&fmt=auto&app=138&f=JPEG?w=632&h=500"),
+            ),)
         ),
         Expanded(
             child: ConstrainedBox(

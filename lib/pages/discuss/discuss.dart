@@ -42,14 +42,14 @@ class DiscussPage extends StatelessWidget {
               },
               body: TabBarView(
                 children: [
-                  Text("1"),
-                  Text("2"),
-                  Text("3"),
-                  Text("4"),
-                  // ArticleList(type: "hot",),
-                  // ArticleList(type: "recommend",),
-                  // ArticleList(type: "news",),
-                  // DiscussCategory(),
+                  // Text("1"),
+                  // Text("2"),
+                  // Text("3"),
+                  // Text("4"),
+                  ArticleList(type: "hot",),
+                  ArticleList(type: "recommend",),
+                  ArticleList(type: "news",),
+                  DiscussCategory(),
 
                 ],
               ),

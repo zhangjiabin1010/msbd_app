@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:msbd_app/models/question_list_entity.dart';
+import 'package:msbd_app/services/http.dart';
 
 
 class SearchBarDelegate extends SearchDelegate<String> {
@@ -78,6 +80,8 @@ class SearchBarDelegate extends SearchDelegate<String> {
   // }
 }
 
+
+
 ///================= 模拟后台数据 ========================
 const searchList = [
   "搜索结果数据1-aa",
@@ -99,3 +103,13 @@ const recentList = [];
 //   "推荐结果6-nn",
 //   "推荐结果7-oo",
 //   "推荐结果8-pp",
+
+
+Future<List<Data>> getSearchResult() async{
+    var response = await Http.getRes('ms_question_list_query',params: {});
+    QuestionListModel QuestionList = QuestionListModel.fromJson(response.data["data"]);
+    return QuestionList.data;
+
+}
+
+

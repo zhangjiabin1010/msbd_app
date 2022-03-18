@@ -65,20 +65,13 @@ class PersonDetail extends StatelessWidget {
 
 
 
-
-
-class PersonDetailTx extends StatefulWidget {
+class PersonDetailTx extends StatelessWidget {
   const PersonDetailTx({Key? key}) : super(key: key);
 
   @override
-  _PersonDetailTxState createState() => _PersonDetailTxState();
-}
-
-class _PersonDetailTxState extends State<PersonDetailTx> {
-  @override
   Widget build(BuildContext context) {
     return Expanded(child:
-      Stack(
+    Stack(
       alignment: Alignment.center,
       children: <Widget>[
         Container(height: 120, ),
@@ -96,6 +89,8 @@ class _PersonDetailTxState extends State<PersonDetailTx> {
     );
   }
 }
+
+
 
 
 

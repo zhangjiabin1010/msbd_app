@@ -39,33 +39,11 @@ class SearchBarDelegate extends SearchDelegate<String> {
     );
   }
 
+
   // 输入时的推荐及搜索结果
   @override
   Widget buildSuggestions(BuildContext context) {
-    final suggestionList = query.isEmpty ? recentList : searchList.where((
-        input) => input.startsWith(query)).toList();
-    return ListView.builder(
-      itemCount: suggestionList.length,
-      itemBuilder: (context, index) {
-        // 创建一个富文本，匹配的内容特别显示
-        return ListTile(title: RichText(text: TextSpan(
-          text: suggestionList[index].substring(0, query.length),
-          style: TextStyle(
-              color: Colors.black, fontWeight: FontWeight.bold),
-          children: [
-            TextSpan(
-                text: suggestionList[index].substring(query.length),
-                style: TextStyle(color: Colors.grey)
-            )
-          ],)),
-          onTap: (){
-            query = suggestionList[index];
-            // Scaffold.of(context).showSnackBar(SnackBar(content: Text(query)));
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(query)));
-          },
-        );
-      },
-    );
+    return SearchListResult(query: query);
   }
 
   // @override
@@ -81,18 +59,91 @@ class SearchBarDelegate extends SearchDelegate<String> {
 }
 
 
+class SearchListResult extends StatefulWidget {
+  final query;
+  const SearchListResult({Key? key, this.query}) : super(key: key);
+
+  @override
+  _SearchListResultState createState() => _SearchListResultState();
+
+}
+
+class _SearchListResultState extends State<SearchListResult> {
+
+
+  late List searchList = [];
+
+
+
+  Future<List<dynamic>> getSearchResult() async{
+    List titleList = [];
+    var response = await Http.getRes('ms_question_list_query',params: {});
+    var data = response.data["data"];
+    data.forEach((element) {
+      titleList.add(element["title"]);
+    });
+    return titleList;
+  }
+
+  rearchResult() async{
+    var suggestionListResult = await getSearchResult();
+    setState(() {
+      searchList = suggestionListResult;
+    });
+  }
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    rearchResult();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    String query = widget.query;
+    List suggestionList = query.isEmpty ? recentList : searchList.where((
+        input) => input.startsWith(query)).toList();
+
+    return ListView.builder(
+      itemCount: suggestionList.length,
+      itemBuilder: (context, index) {
+        // 创建一个富文本，匹配的内容特别显示
+        return ListTile(title: RichText(text: TextSpan(
+          text: suggestionList[index].substring(0, query.length),
+          style: TextStyle(
+              color: Colors.black, fontWeight: FontWeight.bold),
+          children: [
+            TextSpan(
+                text: suggestionList[index].substring(query.length),
+                style: TextStyle(color: Colors.grey)
+            )
+          ],)),
+          onTap: (){
+            var query = suggestionList[index];
+            // Scaffold.of(context).showSnackBar(SnackBar(content: Text(query)));
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(query)));
+          },
+        );
+      },
+    );
+  }
+}
+
+
 
 ///================= 模拟后台数据 ========================
-const searchList = [
-  "搜索结果数据1-aa",
-  "搜索结果数据2-bb",
-  "搜索结果数据3-cc",
-  "搜索结果数据4-dd",
-  "搜索结果数据5-ee",
-  "搜索结果数据6-ff",
-  "搜索结果数据7-gg",
-  "搜索结果数据8-hh"
-];
+// const searchList = [
+//   "搜索结果数据1-aa",
+//   "搜索结果数据2-bb",
+//   "搜索结果数据3-cc",
+//   "搜索结果数据4-dd",
+//   "搜索结果数据5-ee",
+//   "搜索结果数据6-ff",
+//   "搜索结果数据7-gg",
+//   "搜索结果数据8-hh"
+// ];
 
 const recentList = [];
 //   "推荐结果1-ii",
@@ -104,12 +155,5 @@ const recentList = [];
 //   "推荐结果7-oo",
 //   "推荐结果8-pp",
 
-
-Future<List<Data>> getSearchResult() async{
-    var response = await Http.getRes('ms_question_list_query',params: {});
-    QuestionListModel QuestionList = QuestionListModel.fromJson(response.data["data"]);
-    return QuestionList.data;
-
-}
 
 

@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:msbd_app/pages/person/person_login.dart';
 
 class PersonNameInfo extends StatefulWidget {
   const PersonNameInfo({Key? key}) : super(key: key);
@@ -58,7 +59,10 @@ class PersonDetail extends StatelessWidget {
           children: [
             PersonDetailTx(),
             PersonNameInfo(),
-            IconButton(onPressed: (){}, icon: Icon(Icons.chevron_right))
+            IconButton(onPressed: (){
+              Navigator.of(context).push(new MaterialPageRoute(
+                builder: (BuildContext context) => PersonLogin(),));
+            }, icon: Icon(Icons.chevron_right))
         ],));
   }
 }

@@ -10,20 +10,22 @@ class PersonLogin extends StatefulWidget {
 
 class _PersonLoginState extends State<PersonLogin> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  String username = '';
+  String password = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("登录"), centerTitle: true),
       body: Container(
         padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
-        constraints: BoxConstraints.tight(Size(double.infinity, 400)),
+        constraints: BoxConstraints.tight(Size(double.infinity, 300)),
         child: Column(
           children: [
             Expanded(
                 child: Container(
               padding: EdgeInsets.only(top: 80),
               child: Form(
+                key: _formKey,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Column(
                   children: [
@@ -32,17 +34,18 @@ class _PersonLoginState extends State<PersonLogin> {
                       autofocus: false,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "请输入用户名";
+                          return '请输入账号';
                         }
                         return null;
                       },
                       style: TextStyle(fontSize: 15),
                       decoration: new InputDecoration(
+                          contentPadding: new EdgeInsets.symmetric(
+                              vertical: 5.0, horizontal: 5.0), //内边距设置
                           filled: true, // 不然 fillColor 等 不生效
-
                           border: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: Colors.white.withOpacity(0.5), // 边框颜色
+                              color: Colors.blue, // 边框颜色
                             ),
                           ),
                           hintText: '请输入帐号',
@@ -50,6 +53,12 @@ class _PersonLoginState extends State<PersonLogin> {
                             Icons.email,
                             color: Colors.grey,
                           )),
+                      onSaved: (value){
+                        username = value!;
+                      },
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 8, bottom: 8),
                     ),
                     Expanded(
                         child: TextFormField(
@@ -58,38 +67,79 @@ class _PersonLoginState extends State<PersonLogin> {
                       autofocus: false,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "请输入用户名";
+                          return '请输入密码';
                         }
                         return null;
                       },
                       style: TextStyle(fontSize: 15),
                       decoration: new InputDecoration(
-                          border: InputBorder.none,
+                          contentPadding: new EdgeInsets.symmetric(
+                              vertical: 5.0, horizontal: 5.0), //内边距设置
+                          filled: true, // 不然 fillColor 等 不生效
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.red, // 边框颜色
+                            ),
+                          ),
                           hintText: '请输入密码',
                           icon: new Icon(
                             Icons.lock,
                             color: Colors.grey,
                           )),
+                      onSaved: (value){
+                        password = value!;
+                      },
                     )),
                   ],
                 ),
               ),
             )),
             Container(
-              child: TextButton(
-                child: Text(
-                  '登录',
-                  style: TextStyle(color: Colors.white),
-                ),
-                style: TextButton.styleFrom(
-                    backgroundColor: Colors.blue, minimumSize: Size(150, 30)),
-                onPressed: () {
-                  print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-                  print(_formKey.currentState?.validate());
-                  print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-                },
-              ),
-            ),
+                padding: EdgeInsets.only(top: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    TextButton(
+                      child: Text(
+                        '注册',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      style: TextButton.styleFrom(
+                          backgroundColor: Colors.cyan,
+                          minimumSize: Size(100, 30)),
+                      onPressed: () {
+                        print(_formKey.currentState?.validate());
+                        if (_formKey.currentState!.validate()) {
+                          _formKey.currentState?.save();
+                          ShowToast("注册成功");
+                        }
+                        else{
+                          WarnToast("输入内容不完整,请检查");
+                        }
+
+                      },
+                    ),
+                    TextButton(
+                      child: Text(
+                        '登录',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      style: TextButton.styleFrom(
+                          backgroundColor: Colors.blue,
+                          minimumSize: Size(100, 30)),
+                      onPressed: () {
+                        print(_formKey.currentState?.validate());
+                        if (_formKey.currentState!.validate()) {
+                          _formKey.currentState?.save();
+                          ShowToast("登录成功");
+                        }
+                        else{
+                          WarnToast("输入内容不完整,请检查");
+                        }
+                      },
+                    ),
+                  ],
+                )),
           ],
         ),
       ),

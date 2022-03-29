@@ -31,6 +31,11 @@ class Http {
     return await request(
         url, pathParams, params, 'POST', null, needCode, cancelToken);
   }
+  // post 请求
+  static postRes(url, {pathParams, params, needCode = false, cancelToken}) async {
+    return await requestRes(
+        url, pathParams, params, 'POST', null, needCode, cancelToken);
+  }
 
   // put 请求
   static put(url, {pathParams, params, needCode = false, cancelToken}) async {

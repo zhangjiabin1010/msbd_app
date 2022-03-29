@@ -14,7 +14,7 @@ class PersonHomePage extends StatelessWidget {
       appBar:
       AppBar(title:Text("个人中心"),centerTitle: true,),
       body: Container(child: Column(children: [
-        PersonDetail(),
+        PersonNameInfo(),
         PersonInfoBtn(),
         PersonMoreSetting()
 

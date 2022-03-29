@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:msbd_app/pages/widgets/toastTip.dart';
+import 'package:msbd_app/services/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 class PersonLogin extends StatefulWidget {
   const PersonLogin({Key? key}) : super(key: key);
@@ -107,11 +110,11 @@ class _PersonLoginState extends State<PersonLogin> {
                       style: TextButton.styleFrom(
                           backgroundColor: Colors.cyan,
                           minimumSize: Size(100, 30)),
-                      onPressed: () {
-                        print(_formKey.currentState?.validate());
+                      onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState?.save();
-                          ShowToast("注册成功");
+                          String returnMsg = await register(username,password);
+                          ShowToast(returnMsg);
                         }
                         else{
                           WarnToast("输入内容不完整,请检查");
@@ -127,11 +130,11 @@ class _PersonLoginState extends State<PersonLogin> {
                       style: TextButton.styleFrom(
                           backgroundColor: Colors.blue,
                           minimumSize: Size(100, 30)),
-                      onPressed: () {
-                        print(_formKey.currentState?.validate());
+                      onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState?.save();
-                          ShowToast("登录成功");
+                          var returnMsg = await userLogin(username,password);
+                          ShowToast(returnMsg);
                         }
                         else{
                           WarnToast("输入内容不完整,请检查");
@@ -145,4 +148,23 @@ class _PersonLoginState extends State<PersonLogin> {
       ),
     );
   }
+
+  register(username,password) async{
+    var response = await Http.postRes('register', params: {"username":username,"password":password});
+    var data = json.decode(response.toString());
+    return data['msg'];
+  }
+
+  userLogin(username,password) async{
+    var response = await Http.postRes('login', params: {"username":username,"password":password});
+
+    var data = json.decode(response.toString());
+    if (data['status']){
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setBool("isLogined", true);
+      prefs.setString("username", username);
+    }
+    return data['msg'];
+  }
+
 }

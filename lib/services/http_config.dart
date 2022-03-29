@@ -9,6 +9,8 @@ const Map urlPath = {
   'ms_qa_query': '/ms_qa_query',
   'article_query': '/article_query',
   'ms_question_list_query': '/ms_question_list_query',
+  'register': '/register',
+  'login': '/login',
 };
 
 // content-type

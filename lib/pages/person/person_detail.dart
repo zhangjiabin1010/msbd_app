@@ -1,5 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:msbd_app/pages/person/person.dart';
+import 'package:msbd_app/pages/person/person_login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class PersonNameInfo extends StatefulWidget {
   const PersonNameInfo({Key? key}) : super(key: key);
@@ -10,7 +14,7 @@ class PersonNameInfo extends StatefulWidget {
 
 class _PersonNameInfoState extends State<PersonNameInfo> {
   bool login_status = false;
-  // late String username;
+  String username = "";
 
   @override
   void initState() {
@@ -20,64 +24,94 @@ class _PersonNameInfoState extends State<PersonNameInfo> {
 
   checkLoginStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.clear();
     bool isLogined = prefs.getBool("isLogined") ?? false;
-    // String user = prefs.getString("username") ?? "";
+    String user = prefs.getString("username") ?? "";
     setState(() {
       login_status = isLogined;
-      // username = user;
+      username = user;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    print("LLLLLLLLLLLLLLLLLLLL");
-    print(login_status);
-    // print(username);
-    print("LLLLLLLLLLLLLLLLLLLL");
-
     if (login_status) {
-      return UserInfo();
+      return UserInfo(context, username);
     } else {
-      return RightAwayLogin();
+      return RightAwayLogin(context);
     }
   }
-}
 
-Widget RightAwayLogin() {
-  return Text("立即登录", style: TextStyle(fontSize: 20));
-}
-
-Widget UserInfo() {
-  return Container(
-    decoration: BoxDecoration(color: Colors.white, boxShadow: <BoxShadow>[
-      BoxShadow(
-        color: Colors.grey,
-      ),
-    ]),
-    child: Row(
-      children: [
-        PersonDetailTx(),
-        Expanded(
-            child: Column(
-                textDirection: TextDirection.ltr,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-              Text("嫩娘了个腿儿", style: TextStyle(fontSize: 20)),
-              Text("积分: 0", style: TextStyle(fontSize: 10, color: Colors.grey))
-            ])),
-        IconButton(
+  Widget RightAwayLogin(context) {
+    return Container(
+        decoration: BoxDecoration(color: Colors.white, boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: Colors.grey,
+          ),
+        ]),
+        child: Padding(
+          padding: const EdgeInsets.all(18.0),
+          child: TextButton(
+            child: Text(
+              "立即登录",
+              style: TextStyle(fontSize: 20, color: Colors.blue),
+            ),
             onPressed: () {
-              // Navigator.of(context).push(new MaterialPageRoute(
-              //   builder: (BuildContext context) => PersonLogin(),
-              // ));
+              Navigator.of(context).push(new MaterialPageRoute(
+                builder: (BuildContext context) => PersonLogin(),
+              ));
             },
-            icon: Icon(Icons.chevron_right))
-      ],
-    ),
-  );
-}
+          ),
+        ));
+  }
 
+  Widget UserInfo(context, username) {
+    return Container(
+        decoration: BoxDecoration(color: Colors.white, boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: Colors.grey,
+          ),
+        ]),
+        child: Row(children: [
+          PersonDetailTx(),
+          Expanded(
+              child: Column(
+                  textDirection: TextDirection.ltr,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                Text(username, style: TextStyle(fontSize: 20)),
+                Text("积分: 0",
+                    style: TextStyle(fontSize: 10, color: Colors.grey)),
+
+              ])),
+          IconButton(
+              icon: Icon(Icons.chevron_right),
+              onPressed: () {
+                showModalBottomSheet(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return new Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            ListTile(
+                                leading: Icon(Icons.logout),
+                                title: new Text("退出登录",style: TextStyle(fontSize: 20),),
+                                onTap: () async {
+                                  SharedPreferences prefs =
+                                  await SharedPreferences
+                                      .getInstance();
+                                  prefs.clear();
+                                  Navigator.of(context).pushReplacement(
+                                      new MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            PersonHomePage(),
+                                      ));
+                                })
+                          ]);
+                    });
+              })
+        ]));
+  }
+}
 
 class PersonDetailTx extends StatelessWidget {
   const PersonDetailTx({Key? key}) : super(key: key);
@@ -89,11 +123,11 @@ class PersonDetailTx extends StatelessWidget {
       alignment: Alignment.center,
       children: <Widget>[
         Container(
-          height: 120,
+          height: 110,
         ),
         Positioned(
-          top: 15.0,
-          bottom: 15.0,
+          top: 12.0,
+          bottom: 12.0,
           child: CircleAvatar(
             radius: 45,
             backgroundImage: NetworkImage(

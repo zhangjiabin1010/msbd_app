@@ -2,9 +2,9 @@
     package="com.example.msbd_app">
     <uses-permission android:name="android.permission.INTERNET" />
     <application
-        android:label="msbd_app"
+        android:label="程序宝典"
         android:usesCleartextTraffic="true"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/icon">
         <activity
             android:name=".MainActivity"
             android:exported="true"

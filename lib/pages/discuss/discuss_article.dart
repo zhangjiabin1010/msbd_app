@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:msbd_app/models/article_entity.dart';
+import 'package:msbd_app/pages/learn/learn_answer_show.dart';
 import 'package:msbd_app/services/http.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class ArticleList extends StatefulWidget {
   final String? type;
@@ -16,29 +18,29 @@ class _ArticleListState extends State<ArticleList> {
   late Future<List<Data>> future;
 
   Future<List<Data>> getArticleList() async {
-    var response = await Http.getRes('article_query', params: {"type":widget.type});
+    var response =
+        await Http.getRes('article_query', params: {"type": widget.type});
     ArticleListModel articleList =
-    ArticleListModel.fromJson(response.data["data"]);
+        ArticleListModel.fromJson(response.data["data"]);
     return articleList.data;
   }
-
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     future = getArticleList();
-
   }
 
-  RefreshController _refreshController = RefreshController(initialRefresh: false);
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
 
   void _onRefresh() async {
     future = getArticleList();
     _refreshController.refreshCompleted();
   }
 
-  void _onLoading() async{
+  void _onLoading() async {
     future = getArticleList();
     print("onloading");
     // if failed,use loadFailed(),if no data return,use LoadNodata()
@@ -83,70 +85,76 @@ class _ArticleListState extends State<ArticleList> {
 
   SmartRefresher buildSmartRefresher(AsyncSnapshot<List<Data>> snapshot) {
     return SmartRefresher(
-                enablePullDown: true,
-                enablePullUp: false,
-                header: WaterDropHeader(),
-                controller: _refreshController,
-                onRefresh: _onRefresh,
-                // onLoading: _onLoading,
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        // onLoading: _onLoading,
 
-                child: ListView.separated(
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (context, index) {
-                      Data item = snapshot.data![index];
-                      return ListTile(
-                        title: Padding(
-                          padding: EdgeInsets.only(bottom: 10),
-                          child: Text("${item.title}",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500),),
-                        ),
-                        subtitle: Row(children: [
-                          Text("${item.author}"),
-                          Container(
-                              margin: EdgeInsets.only(left: 20),
-                              child: Text("${item.comment}")),
-                          Spacer(flex: 2),
-                          Container(
-                            margin: EdgeInsets.only(right: 5),
+        child: ListView.separated(
+            itemCount: snapshot.data!.length,
+            itemBuilder: (context, index) {
+              Data item = snapshot.data![index];
+              return ListTile(
+                onTap: () {
+                  pushNewScreen(
+                    context,
+                    screen: AnswerShow(id: 1),
+                    withNavBar: false, // OPTIONAL VALUE. True by default.
+                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                  );
+                },
+                title: Padding(
+                  padding: EdgeInsets.only(bottom: 10),
+                  child: Text(
+                    "${item.title}",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                  ),
+                ),
+                subtitle: Row(children: [
+                  Text("${item.author}"),
+                  Container(
+                      margin: EdgeInsets.only(left: 20),
+                      child: Text("${item.comment}")),
+                  Spacer(flex: 2),
+                  Container(
+                    margin: EdgeInsets.only(right: 5),
 
-                            alignment: Alignment.bottomRight,
-                            // margin:EdgeInsets.only(left: 20),
-                            child: Text("${item.createtime}"),
-                          )
-                        ]),
-                      );
-                    },
-                    separatorBuilder: (context, index) {
-                      return Divider(color: Colors.purple);
-                    },
-                    shrinkWrap: true));
+                    alignment: Alignment.bottomRight,
+                    // margin:EdgeInsets.only(left: 20),
+                    child: Text("${item.createtime}"),
+                  )
+                ]),
+              );
+            },
+            separatorBuilder: (context, index) {
+              return Divider(color: Colors.grey);
+            },
+            shrinkWrap: true));
   }
-
-
-
 }
-
-
 
 class CategoryArticleList extends StatefulWidget {
   final String? type;
-  const CategoryArticleList({Key? key,this.type}) : super(key: key);
+  const CategoryArticleList({Key? key, this.type}) : super(key: key);
 
   @override
-  _CategoryArticleListState createState() => _CategoryArticleListState(this.type);
+  _CategoryArticleListState createState() =>
+      _CategoryArticleListState(this.type);
 }
 
 class _CategoryArticleListState extends State<CategoryArticleList> {
-
   _CategoryArticleListState(String? type);
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      appBar: AppBar(),
-      body: Container(
-        child: ArticleList(type: widget.type,),
-      )
-    );
+        appBar: AppBar(),
+        body: Container(
+          child: ArticleList(
+            type: widget.type,
+          ),
+        ));
   }
 }

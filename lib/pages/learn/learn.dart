@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:msbd_app/pages/learn/learn_question_list.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 
 
@@ -69,11 +70,11 @@ class LearnPage extends StatelessWidget {
 
     return Scaffold(body: Container(child: Column(
       children: [
-        Container(
-            margin: EdgeInsets.only(top: 10),
-            child: Text("选择语言",
-                style: TextStyle(color: Colors.red, fontSize: 17),
-                textAlign: TextAlign.left)),
+        // Container(
+        //     margin: EdgeInsets.only(top: 10),
+        //     child: Text("选择语言",
+        //         style: TextStyle(color: Colors.red, fontSize: 17),
+        //         textAlign: TextAlign.left)),
         Container(
           margin: EdgeInsets.only(top: 20),
           child: ListView.builder(
@@ -86,8 +87,14 @@ class LearnPage extends StatelessWidget {
                     trailing: Icon(Icons.keyboard_arrow_right),
                     onTap:(){
                       String language = languageList[index]["name"];
-                      Navigator.of(context).push(new MaterialPageRoute(
-                          builder: (BuildContext context) => QuestionList(language:language),));
+                      pushNewScreen(
+                        context,
+                        screen: QuestionList(language:language),
+                        withNavBar: false, // OPTIONAL VALUE. True by default.
+                        pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                      );
+                      // Navigator.of(context).push(new MaterialPageRoute(
+                      //     builder: (BuildContext context) => QuestionList(language:language),));
 
 
                     }

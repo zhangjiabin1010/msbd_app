@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:msbd_app/pages/person/person.dart';
 import 'package:msbd_app/pages/widgets/toastTip.dart';
 import 'package:msbd_app/services/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -135,6 +136,8 @@ class _PersonLoginState extends State<PersonLogin> {
                           _formKey.currentState?.save();
                           var returnMsg = await userLogin(username,password);
                           ShowToast(returnMsg);
+                          Navigator.of(context).pushAndRemoveUntil(new MaterialPageRoute(
+                            builder: (BuildContext context) => PersonHomePage(),),(route) => route == null);
                         }
                         else{
                           WarnToast("输入内容不完整,请检查");

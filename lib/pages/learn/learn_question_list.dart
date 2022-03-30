@@ -5,6 +5,7 @@ import 'package:msbd_app/pages/learn/learn_favorite_question_list.dart';
 import 'package:msbd_app/pages/widgets/search_bar.dart';
 import 'package:msbd_app/services/http.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 
 
@@ -89,8 +90,14 @@ class QuestionList extends StatelessWidget {
                         int id = item.id;
                         return ListTile(
                           onTap:(){
-                            Navigator.of(context).push(new MaterialPageRoute(
-                              builder: (BuildContext context) => AnswerShow(id:id),));
+                            pushNewScreen(
+                              context,
+                              screen: AnswerShow(id:id),
+                              withNavBar: false, // OPTIONAL VALUE. True by default.
+                              pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                            );
+                            // Navigator.of(context).push(new MaterialPageRoute(
+                            //   builder: (BuildContext context) => AnswerShow(id:id),));
                           },
                           title: Padding(
                             padding: EdgeInsets.only(bottom: 10),
@@ -99,7 +106,7 @@ class QuestionList extends StatelessWidget {
                         );
                       },
                       separatorBuilder: (context, index) {
-                        return Divider(color: Colors.purple);
+                        return Divider(color: Colors.grey);
                       },
                       shrinkWrap: true)),
             );

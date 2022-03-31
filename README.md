@@ -16,6 +16,9 @@
 - persistent_bottom_nav_bar: ^4.0.2
 - provider: ^6.0.2
 
+> 由于工作较忙，一些组件的架构还没有做优化，后续有时间会对进行优化和其余功能开发。
+> Due to the busy work, some functions have not been optimized in time, and there will be time to optimize and develop other functions in the future.
+
 ### 一些界面图片.
 > Some images.
 

@@ -1,16 +1,30 @@
-# msbd_app
 
-A new Flutter project.
-## ffdfsdf
-## Getting Started
+## 一个关于工程师面试题的Flutter APP.
+> A simple Flutter project about IT interview questions.
 
-This project is a starting point for a Flutter application.
+### 使用到的package.
+> package used.
 
-A few resources to get you started if this is your first Flutter project:
+- flutter_html: ^2.2.1
+- json_serializable : ^6.0.0
+- http: ^0.13.4
+- provider: ^6.0.2
+- badges: ^2.0.2
+- pull_to_refresh: ^2.0.0
+- fluttertoast: ^8.0.9
+- shared_preferences: ^2.0.13
+- persistent_bottom_nav_bar: ^4.0.2
+- provider: ^6.0.2
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+> 由于工作较忙，一些组件的架构还没有做优化，后续有时间会对进行优化和其余功能开发。
+> Due to the busy work, some functions have not been optimized in time, and there will be time to optimize and develop other functions in the future.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### 一些界面图片.
+> Some images.
+
+![Overview](https://github.com/zhangjiabin1010/msbd_app/blob/master/lib/test/1.gif)
+![Learn](https://github.com/zhangjiabin1010/msbd_app/blob/master/lib/test/2.gif)
+![Discuss](https://github.com/zhangjiabin1010/msbd_app/blob/master/lib/test/3.gif)
+![Personal](https://github.com/zhangjiabin1010/msbd_app/blob/master/lib/test/4.gif)
+
+

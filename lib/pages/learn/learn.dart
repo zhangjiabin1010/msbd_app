@@ -11,7 +11,7 @@ class LearnPage extends StatelessWidget {
   Widget build(BuildContext context) {
     const List<Map<String, dynamic>> languageList = [
       {
-        "name": "java",
+        "name": "Java",
         "leadingIcon": Icon(
           IconData(
             0xe639,

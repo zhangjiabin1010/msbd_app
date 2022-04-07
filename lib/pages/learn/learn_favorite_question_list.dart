@@ -91,7 +91,7 @@ class FavoriteQuestionList extends StatelessWidget {
                   },
                   title: Padding(
                     padding: EdgeInsets.only(bottom: 10),
-                    child: Text("${item.title}",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500),),
+                    child: Text("${item.question}",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500),),
                   ),
                   trailing: FavoriteIcon(id:id)
                 );

@@ -30,10 +30,10 @@ class Data extends Object {
   @JsonKey(name: 'id')
   int id;
 
-  @JsonKey(name: 'title')
-  String title;
+  @JsonKey(name: 'question')
+  String question;
 
-  Data(this.id,this.title,);
+  Data(this.id,this.question,);
 
   factory Data.fromJson(Map<String, dynamic> srcJson) => _$DataFromJson(srcJson);
 

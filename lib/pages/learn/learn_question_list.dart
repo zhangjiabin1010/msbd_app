@@ -101,7 +101,7 @@ class QuestionList extends StatelessWidget {
                           },
                           title: Padding(
                             padding: EdgeInsets.only(bottom: 10),
-                            child: Text("${item.id}.  ${item.title}",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500),),
+                            child: Text("${item.id}.  ${item.question}",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500),),
                           ),
                         );
                       },

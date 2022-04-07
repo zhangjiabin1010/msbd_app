@@ -24,10 +24,10 @@ Map<String, dynamic> _$QuestionListEntityToJson(QuestionListEntity instance) =>
 
 Data _$DataFromJson(Map<String, dynamic> json) => Data(
       json['id'] as int,
-      json['title'] as String,
+      json['question'] as String,
     );
 
 Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
       'id': instance.id,
-      'title': instance.title,
+      'question': instance.question,
     };
